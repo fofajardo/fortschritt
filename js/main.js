@@ -90,12 +90,12 @@ var Fortscript = {
                 params += "offset=" + Fortscript.postCount;
                 break;
             case "groups":
-                // FIXME: get group id from page
-                params += "group=1&show-category=false&offset=" + Fortscript.postCount;
+                let groupID = "group=" + Fortscript.feedArea.getAttribute("groupid");
+                params += groupID + "&show-category=false&offset=" + Fortscript.postCount;
                 break;
             case "profile":
-                // FIXME: get user id from page
-                params += "user=1&offset=" + Fortscript.postCount;
+                let userID = "user=" + Fortscript.feedArea.getAttribute("userid");
+                params += userID + "&offset=" + Fortscript.postCount;
                 break;
             default:
                 return;

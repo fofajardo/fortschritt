@@ -36,13 +36,14 @@
 					</ul>
 				</div>
 			</div>
-			<div id="Feed">
+			<div id="Feed" groupid="<?php echo $get_id ?>">
 				<div class="card">
 					<div class="card-header">
 						<span><?php $page->get_group_name($get_id); ?></span>
 					</div>
 				</div>
 				<?php $page->get_user_posts($get_id, true, null, false); ?>
+				<?php $page->get_moreposts_card('groups'); ?>
 			</div>
 		</main>
     </body>

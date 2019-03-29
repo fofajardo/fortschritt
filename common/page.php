@@ -75,7 +75,7 @@ class Page {
 		$storage = new Storage();
 		$sectionid = $storage->get_profile_info($this->get_user_id())[2];
 		$result = $storage->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
-		
+
 		if (!isset($result) || (isset($postid) && $postid == 0)) {
 			$this->get_notfound_card();
 			return;

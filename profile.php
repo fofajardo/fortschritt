@@ -31,13 +31,14 @@
 						</ul>
 					</div>
 				</div>
-				<div id="Feed">
+				<div id="Feed" userid="<?php echo $page->get_user_id() ?>">
 					<div class="card">
 						<div class="card-header">
 							Your Posts
 						</div>
 					</div>
 					<?php $page->get_user_posts(null, true, null, true, $page->get_user_id()); ?>
+					<?php $page->get_moreposts_card('profile'); ?>
 				</div>
 			</div>
 		</main>
