@@ -14,6 +14,7 @@
 		"fieldrequirement" => "Your note contains too few characters.",
 		"postcreated" => "Your note was posted.",
 		"postdeleted" => "Your note was deleted.",
+		"postedited" => "Your note was edited.",
 		"actionfailed" => "Action failed.");
 	
 	// Default response to return
@@ -52,8 +53,13 @@
 				break;
 			case "edit":
 				if (isset($_REQUEST["content"]) && isset($_REQUEST["post"])) {
-					$postid = $_REQUEST["post"];
-					$response = 'TODO: Post edit not yet implemented.';
+					$postid = sanitize($_REQUEST["post"]);
+					$content = sanitize($_REQUEST["content"]);
+					
+					$storage = new Storage();
+					if ($storage->edit_post($postid, $content)) {
+						$response = $responses["postedited"];
+					}
 				}
 				break;
 			case "delete":
@@ -64,6 +70,11 @@
 					if ($storage->delete_post($postid)) {
 						$response = $responses["postdeleted"];
 					}
+				}
+				break;
+			case "get_edit_modal":
+				if (isset($_REQUEST["post"])) {
+					$response = $page->get_edit_card($_REQUEST["post"]);
 				}
 				break;
 			case "get_posts":

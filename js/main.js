@@ -90,6 +90,40 @@ var Fortscript = {
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params);
     },
+    editPost: function (e) {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText);
+            }
+        };
+
+        cachedPostID = e.target.parentElement.getAttribute("postid");
+        let params = "action=get_edit_modal&post=" + cachedPostID;
+
+        request.open("POST", "/common/post.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params);
+    },
+    cachedPostID: null,
+    sendEditedPost: function () {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText, function () { location.reload(); } );
+            }
+        };
+
+        let value = document.getElementById("Edit-area").value;
+
+        let params = "action=edit&post=" + cachedPostID;
+        params += "&content=" + value;
+        request.open("POST", "/common/post.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params);
+    },
     addPosts: function (page) {
         let request = new XMLHttpRequest();
         

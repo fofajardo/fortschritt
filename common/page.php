@@ -187,6 +187,19 @@ class Page {
 		echo '</div>';
 		echo '</div>';
 	}
+	function get_edit_card($postid) {
+		$storage = new Storage();
+		$content = $storage->get_posts(null, null, $postid)->fetch_row()[2];
+		echo '<div class="card">';
+		echo '<div class="card-header">';
+		echo 'Edit Note';
+		echo '</div>';
+		echo '<div class="card-content flex-container justify-sb">';
+		printf('<textarea id="Edit-area" placeholder="Type your note here...">%s</textarea>', $content);
+		echo '<input id="Edit-send" type="submit" name="submit" value="Post" onclick="Fortscript.sendEditedPost();"/>';
+		echo '</div>';
+		echo '</div>';
+	}
 }
 
 ?>

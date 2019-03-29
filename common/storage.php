@@ -214,6 +214,20 @@ class Storage {
 		$this->close_connection();
 		return $response;
 	}
+	function edit_post($postid, $content) {
+		$this->create_connection();
+				
+		$sql = "UPDATE posts SET postContent = '$content' WHERE posts.postID = $postid";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
 }
 
 ?>
