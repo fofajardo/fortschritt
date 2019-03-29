@@ -99,6 +99,20 @@ class Storage {
 			}
 		}
 	}
+	function get_sections() {
+		$this->create_connection();
+
+		$sql = "SELECT * FROM sections";
+		$result = $this->conn->query($sql);
+
+		$this->close_connection();
+		
+		// $row[0] = section ID
+		// $row[1] = display name
+		if ($result->num_rows > 0) {
+			return $result;
+		}
+	}
 	function get_joined_groups($groupids) {
 		$this->create_connection();
 
@@ -176,6 +190,20 @@ class Storage {
 		$datenow = date("Y-m-d");
 		$sql = "INSERT INTO posts (postUserID, postDate, postGroupID, postContent, sectionID) " .
 			   "VALUES ('$userid', '$datenow', '$groupid', '$content', '$sectionid')";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
+	function delete_post($postid) {
+		$this->create_connection();
+		
+		$sql = "DELETE FROM posts WHERE posts.postID = $postid";
 		$response = false;
 		if ($this->conn->query($sql) === TRUE) {
 			$response = true;

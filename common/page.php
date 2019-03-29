@@ -112,9 +112,9 @@ class Page {
 			echo '</div>';
 			
 			if ($this->get_user_id() == $row[3]) {
-				echo '<div class="post-header-controls">';
-				echo '<div class="button no-padding material-icons md-18">delete_outline</div>';
-				echo '<div class="button no-padding material-icons md-18">edit</div>';
+				printf('<div class="post-header-controls" postid="%s">', $row[0]);
+				echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deletePost(event)">delete_outline</div>';
+				echo '<div class="button no-padding material-icons md-18 edit-post" onclick="Fortscript.editPost(event)">edit</div>';
 				echo '</div>';
 			}
 			echo '</div>';
@@ -147,14 +147,43 @@ class Page {
 			}
 		}	
 	}
+	function get_section_options() {
+		$storage = new Storage();
+		$result = $storage->get_sections();
+		// $row[0] = section ID
+		// $row[1] = display name
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_row()) {
+				printf('<option value="%s">%s</option>', $row[0], $row[1]);
+			}
+		}
+	}
+	function get_group_options() {
+		$storage = new Storage();
+		$profile_info = $storage->get_profile_info($this->get_user_id());
+		$result = $storage->get_joined_groups($profile_info[3]);
+		// $row[0] = group ID
+		// $row[1] = display name
+		// $row[2] = admins ID
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_row()) {
+				printf('<option value="%s">%s</option>', $row[0], $row[1]);
+			}
+		}
+	}
 	function get_newpost_card() {
 		echo '<div class="card">';
 		echo '<div class="card-header">';
 		echo 'New Note';
 		echo '</div>';
-		echo '<div class="card-content flex-container">';
+		echo '<div class="card-content flex-container column">';
 		echo '<textarea id="Post-area" placeholder="Type your note here..."></textarea>';
+		echo '<div class="flex-container mt">';
+		echo '<select id="GroupSelector-Menu" class="mr">';
+		$this->get_group_options();
+		echo '</select>';
 		echo '<input id="Post-send" type="submit" name="submit" value="Post"/>';
+		echo '</div>';
 		echo '</div>';
 		echo '</div>';
 	}

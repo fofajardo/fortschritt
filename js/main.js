@@ -18,6 +18,9 @@ var Fortscript = {
     get noPostsCard() {
         return document.getElementById("Card-NotFound");
     },
+    get groupPostMenu() {
+        return document.getElementById("GroupSelector-Menu");
+    },
     postCount: 10,
     init: function () {
         Fortscript.sendTextBtn.addEventListener("click", Fortscript.sendPost, false);
@@ -65,9 +68,27 @@ var Fortscript = {
             }
         };
 
+        let groupid = Fortscript.groupPostMenu.selectedIndex + 1;
+        let params = "action=new&content=" + Fortscript.sendTextArea.value;
+        params += "&group=" + groupid;
         request.open("POST", "/common/post.php", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send("action=new&group=1&content=" + Fortscript.sendTextArea.value );
+        request.send(params);
+    },
+    deletePost: function (e) {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText, function () { location.reload(); } );
+            }
+        };
+
+        let postid = e.target.parentElement.getAttribute("postid");
+        let params = "action=delete&post=" + postid;
+        request.open("POST", "/common/post.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params);
     },
     addPosts: function (page) {
         let request = new XMLHttpRequest();

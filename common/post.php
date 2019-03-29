@@ -2,10 +2,18 @@
 	require_once "storage.php";
 	require_once "page.php";
 	
+	function sanitize($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML5);
+		return $data;
+	}
+	
 	$responses = array(
 		"noaction" => "Invalid request: You did not provide an action.",
 		"fieldrequirement" => "Your note contains too few characters.",
 		"postcreated" => "Your note was posted.",
+		"postdeleted" => "Your note was deleted.",
 		"actionfailed" => "Action failed.");
 	
 	// Default response to return
@@ -24,8 +32,8 @@
 		switch ($action) {
 			case "new":
 				if (isset($_REQUEST["content"]) && isset($_REQUEST["group"])) {
-					$content = $_REQUEST["content"];
-					$groupid = $_REQUEST["group"];
+					$content = sanitize($_REQUEST["content"]);
+					$groupid = sanitize($_REQUEST["group"]);
 					// 
 					if (strlen(trim($content)) < 10) {
 						$response = $responses["fieldrequirement"];
@@ -34,8 +42,8 @@
 					
 					$storage = new Storage();
 					
-					$userid = $page->get_user_id();
-					$sectionid = $storage->get_profile_info($userid)[2];
+					$userid = sanitize($page->get_user_id());
+					$sectionid = sanitize($storage->get_profile_info($userid)[2]);
 					
 					if ($storage->create_post($userid, $groupid, $content, $sectionid) === true) {
 						$response = $responses["postcreated"];
@@ -50,8 +58,12 @@
 				break;
 			case "delete":
 				if (isset($_REQUEST["post"])) {
-					$postid = $_REQUEST["post"];
-					$response = 'TODO: Post delete not yet implemented.';
+					$postid = sanitize($_REQUEST["post"]);
+					
+					$storage = new Storage();
+					if ($storage->delete_post($postid)) {
+						$response = $responses["postdeleted"];
+					}
 				}
 				break;
 			case "get_posts":
