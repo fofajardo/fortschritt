@@ -2,6 +2,9 @@
 
 require_once "storage.php";
 
+// TODO: Rewrite session file logic
+// We must store a session cookie instead of storing username + password
+
 $login_response = '';
 
 // Logic for logout page
