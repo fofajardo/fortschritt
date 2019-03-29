@@ -1,0 +1,316 @@
+:root {
+  /* page */
+  --page-background-color: #f1f3f4;
+  --page-text-color: #000;
+  --header-background-color: #1855a5;
+  --header-text-color: #fff;
+  --header-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+  /* tooltips */
+  --tooltip-background-color: rgba(0, 0, 0, 0.7);
+  --tooltip-text-color: #fff;
+  /* buttons */
+  --button-background-color: transparent;
+  --button-background-hover-color: rgba(0, 0, 0, 0.1);
+  --button-background-hover-active-color: rgba(0, 0, 0, 0.2);
+  --button-text-color: #000;
+  
+  --card-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+  --card-background: #fff;
+  --card-radius: 2px;
+  --card-header-background: rgba(0, 0, 0, 0.05);
+  --card-footer-background: rgba(0, 0, 0, 0.02);
+  --card-border-color: rgba(0, 0, 0, 0.2);
+}
+
+/*** site header ***/
+#Header {
+  background-color: var(--header-background-color);
+  color: var(--header-text-color);
+  top: 0;
+  box-shadow: var(--header-shadow);
+}
+.sticky {
+  position: sticky;
+  top: 3.5em;
+}
+.navigation {
+  margin: 0;
+  width: 90%;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.navigation li {
+  text-align: center;
+}
+
+.navigation a {
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+.navigation a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.navigation .tooltip {
+  font-weight: bold;
+  margin-top: 2.5em;
+  margin-left: -4.5em;
+}
+
+#Search {
+  border: none;
+  border-radius: 4px;
+  margin: 0 10px;
+  padding: 0 10px;
+  min-width: 500px;
+  min-height: 30px;
+  align-self: center;
+}
+#Postbox {
+  border: none;
+  border-radius: 4px;
+  margin: 0 10px;
+  padding: 0 10px;
+  width: 95%;
+  min-height: 30px;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+/*** content ***/
+body {
+  background-color: var(--page-background-color);
+  color: var(--page-text-color);
+  margin: 0;
+  padding: 0;
+}
+* {
+  font-family: "Noto Sans", "Segoe UI", sans-serif;
+}
+@keyframes body-fade {
+  0% {
+      opacity: 0;
+  }
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+.content {
+  padding: 2em 3.5em;
+  animation: body-fade 1s;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-center {
+  align-items: center;
+}
+
+#Sidebar {
+  flex: 1 35%;
+}
+#Feed {
+  flex: 2 100%;
+}
+.sidebar-navigation {
+  margin: 0;
+  list-style: none;
+  padding-inline-start: 0;
+}
+.sidebar-navigation li {
+  padding: 0.5em 1em;
+}
+.sidebar-navigation:not(.no-border) li {
+  border-bottom: 1px solid var(--card-border-color);
+}
+.sidebar-navigation:not(.no-border) a:last-child li {
+  border-bottom: none;
+}
+.sidebar-navigation li:hover {
+  background-color: var(--button-background-hover-color);
+}
+.sidebar-navigation a {
+  text-decoration: none;
+  color: var(--page-text-color);
+}
+.card {
+  box-shadow: var(--card-shadow);
+  margin: 1em;
+  background-color: var(--card-background);
+  border-radius: var(--card-radius);
+}
+.card:not(.min-padding) > div {
+  padding: 0.7em;
+}
+.card.min-padding > div {
+  padding: 0.5em;
+}
+.card-header {
+  background-color: var(--card-header-background);
+  font-weight: bold;
+}
+.card-header:not(.no-border) {
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+  border-bottom: 1px solid var(--card-border-color);
+}
+.card-footer {
+  background-color: var(--card-footer-background);
+  border-bottom-left-radius: var(--card-radius);
+  border-bottom-right-radius: var(--card-radius);
+  font-weight: bold;
+  border-top: 1px solid var(--card-border-color);
+}
+.card-post {
+  display: flex;
+  flex-direction: row;
+}
+.post-userimage {
+  flex: 1 5%;
+}
+.post-content {
+  flex: 2 100%;
+}
+.profile-username-page,
+.profile-username {
+  font-weight: bold;
+}
+.profile-picture-page,
+.profile-picture {
+  border-radius: 99999em;
+  font-family: "Segoe UI", sans-serif;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2em;
+  width: 64px;
+  height: 64px;
+  background-color: green;
+}
+.profile-username-page {
+  font-size: 200%;
+}
+.profile-picture-page {
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  border: 3px solid var(--card-border-color);
+}
+.profile-cover {
+  padding-top: 15em;
+  background-image: url("http://wallpapercave.com/wp/sU4PDPQ.jpg");
+}
+.profile-information {
+  text-shadow: 0 0 5px #fff;
+}
+.post-category {
+  font-weight: bold;
+  font-size: 70%;
+}
+
+#Calendar {
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/*** text ***/
+.bold {
+  font-weight: bold;
+}
+.mb {
+  margin-bottom: 10px;
+}
+.ml {
+  margin-left: 10px;
+}
+.mr {
+  margin-right: 10px;
+}
+.mt {
+  margin-top: 10px;
+}
+.ma {
+  margin: 10px;
+}
+.subtitle {
+  font-size: 80%;
+}
+.superscript {
+  position: relative;
+  top: -0.5em;
+  font-size: 80%;
+}
+
+/*** tooltips ***/
+.hastooltip:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.tooltip {
+  background: var(--tooltip-background-color);
+  color: var(--tooltip-text-color);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+  padding: 10px;
+  position: absolute;
+  margin-top: -0.5em;
+  z-index: 5;
+  min-width: 100px;
+  visibility: collapse;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+/*** buttons ***/
+.button {
+  border: 2px solid var(--button-background-color);
+  background: var(--button-background-color);
+  color: var(--button-text-color);
+  text-decoration: none;
+  padding: 4px;
+  margin: 4px;
+}
+.button:hover {
+  cursor: pointer;
+  background: var(--button-background-hover-color);
+}
+.button:hover:active {
+  background: var(--button-background-hover-active-color);
+}
+
+/*** inherited rules for material icons ***/
+/* rules for sizing the icons */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/*** responsive design ***/
+.content,
+.navigation a {
+  transition: padding 300ms;
+}
+
+@media all and (max-width: 900px) {
+  .content {
+    padding: 0;
+  }
+  .navigation a {
+    padding: 2px;
+  }
+}

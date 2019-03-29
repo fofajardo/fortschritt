@@ -1,0 +1,33 @@
+:root {
+  --card-radius: 5px;
+}
+.content {
+  padding: 0;
+  height: 100vh;
+}
+.card-login {
+  width: 450px;
+  padding: 1em;
+}
+.card-login .card-header {
+  --card-header-background: transparent;
+}
+#FortschrittLogo {
+  width: 250px;
+  filter: invert(1);
+}
+#LoginTitle {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+#LoginSubtitle {
+  padding-top: 0.3em;
+  font-size: 1em;
+  font-weight: normal;
+}
+#LoginForm form {
+  flex: 1 100%;
+}
+#LoginForm form > * {
+  margin: 1em 0;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title>LearnTable - Dashboard</title>
+		<link href="style/main.css" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet"/> 
+    </head>
+    <body>
+		<header id="Header" class="flex-container sticky">
+		<ul class="navigation flex-container flex-center">
+			<li>
+				<a href="#"><b>LearnTable</b></a>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="dashboard.html">dashboard</a>
+				<span class="tooltip">Dashboard</span>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="materials.html">local_library</a>
+				<span class="tooltip">Materials</span>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="schedule.html">calendar_today</a>
+				<span class="tooltip">Schedule</span>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="dictionary.html">book</a>
+				<span class="tooltip">Dictionary</span>
+			</li>
+			<li>
+				<input id="Search" type="search" placeholder="Search posts, groups, users, apps, and more"></input>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="#">notifications</a>
+				<span class="tooltip">Notifications</span>
+			</li>
+			<li class="hastooltip">
+				<a class="material-icons" href="profile.html">account_circle</a>
+				<span class="tooltip">Profile</span>
+			</li>
+		</ul>
+		</header>
+		<main class="content flex-container">
+			<div id="Sidebar">
+				<div class="card">
+					<div class="flex-container flex-center">
+						<div class="profile-picture flex-container">
+							J
+						</div>
+						<div class="flex-container flex-column ml">
+							<span class="profile-username">Juán de la Cruz</span>
+							<span class="subtitle">APEC Schools</span>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Groups
+					</div>
+					<ul class="sidebar-navigation flex-container flex-column">
+						<a href="#"><li>English</li></a>
+						<a href="#"><li>Filipino</li></a>
+						<a href="#"><li>Math</li></a>
+						<a href="#"><li>Science</li></a>
+						<a href="#"><li>Music, Arts, and PE (MAPE)</li></a>
+						<a href="#"><li>Technology and Livelihood Education (TLE)</li></a>
+						<a href="#"><li>Values Education</li></a>
+					</ul>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Communities
+					</div>
+					<ul class="sidebar-navigation flex-container flex-column">
+						<a href="#"><li>My Classroom</li></a>
+						<a href="#"><li>My District</li></a>
+						<a href="#"><li>Support</li></a>
+					</ul>
+				</div>
+			</div>
+			<div id="Feed">
+				<div class="card">
+					<div class="card-header">
+						New Post
+					</div>
+					<div class="card-content">
+						<input id="Postbox" type="text" placeholder="Type your note here..."></input>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+					Latest Posts
+					</div>
+					<div class="card-post">
+						<div class="post-userimage mr">
+							<div class="profile-picture flex-container">
+								L
+							</div>
+							<span class="subtitle">10/03/2020</span>
+						</div>
+						<div class="post-content">
+							<div class="flex-container flex-center mb">
+								<span class="profile-username mr">Ms. Lumisa N. Sahukay</span>
+								<span class="post-category">to Announcements</span>
+							</div>
+							<div class="subtitle">
+								I've updated our material directory to include our future lessons. You can look this up when needed.
+								<br/><br/>
+								Sync your app to continue having access to the materials even when offline.
+								<br/><br/>
+								Have a nice weekend!
+							</div>
+						</div>
+					</div>
+					<div class="card-footer subtitle">
+						<span class="button">Comment</span>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-post">
+						<div class="post-userimage mr">
+							<div class="profile-picture flex-container">
+								D
+							</div>
+							<span class="subtitle">02/03/2020</span>
+						</div>
+						<div class="post-content">
+							<div class="flex-container flex-center mb">
+								<span class="profile-username mr">Dina B. Bangun</span>
+								<span class="post-category">to Filipino</span>
+							</div>
+							<div class="subtitle">
+								Ito ang aking tula:
+								<h3>Paano ba ang magmahal?</h3>
+								Palagi bang nasasaktan<br/>
+								Umiiyak na lang palagi<br/>
+								Gusto ko nang lumisan<br/>
+								<br/>
+								Paano ba ang magmahal?<br/>
+								Umiiyak na lang palagi<br/>
+								Lagi na lang di maaari<br/>
+								Ngunit <b>kayang lumisan...</b><br/>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer subtitle">
+						<span class="button">Comment</span>
+					</div>
+				</div>
+			</div>
+		</main>
+    </body>
+</html>

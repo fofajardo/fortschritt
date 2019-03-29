@@ -1,0 +1,446 @@
+:root {
+  /* page */
+  --page-background-color: #f1f3f4;
+  --page-text-color: #000;
+  --header-background-color: #1855a5;
+  --header-text-color: #fff;
+  --header-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+  /* tooltips */
+  --tooltip-background-color: rgba(0, 0, 0, 0.7);
+  --tooltip-text-color: #fff;
+  /* buttons */
+  --button-background-color: transparent;
+  --button-background-hover-color: rgba(0, 0, 0, 0.1);
+  --button-background-hover-active-color: rgba(0, 0, 0, 0.2);
+  --button-text-color: #000;
+  
+  --card-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+  --card-background: #fff;
+  --card-radius: 2px;
+  --card-header-background: rgba(0, 0, 0, 0.05);
+  --card-footer-background: rgba(0, 0, 0, 0.02);
+  --card-border-color: rgba(0, 0, 0, 0.2);
+}
+
+/*** site header ***/
+#Header {
+  background-color: var(--header-background-color);
+  color: var(--header-text-color);
+  top: 0;
+  box-shadow: var(--header-shadow);
+}
+
+.sticky {
+  position: sticky;
+  top: 3.5em;
+}
+
+.navigation {
+  padding: 0;
+  margin: 0;
+  width: 95vw;
+  list-style: none;
+}
+
+.navigation li {
+  text-align: center;
+}
+
+.navigation a {
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+.navigation a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.navigation .tooltip {
+  font-weight: bold;
+  margin-top: 2.5em;
+  margin-left: -4.5em;
+}
+
+#Search {
+  border: none;
+  border-radius: 4px;
+  margin: 0 10px;
+  padding: 0 10px;
+  min-width: 500px;
+  height: 30px;
+  align-self: center;
+}
+#Post-area {
+  flex: 1 100%;
+  margin-inline-end: 1em;
+}
+#Post-send {
+  flex: 2;
+}
+
+/*** content ***/
+body {
+  background-color: var(--page-background-color);
+  color: var(--page-text-color);
+  margin: 0;
+  padding: 0;
+}
+* {
+  font-family: "Noto Sans", "Segoe UI", sans-serif;
+}
+
+/* Content container */
+.content {
+  padding: 2em 3.5em;
+}
+
+/* Flex */
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.flex-container.column {
+  flex-direction: column;
+}
+
+/* Align */
+.flex-container.align-center {
+  align-items: center;
+}
+.flex-container.align-start {
+  align-items: flex-start;
+}
+.flex-container.align-end {
+  align-items: flex-end;
+}
+.flex-container.align-baseline {
+  align-items: baseline;
+}
+
+/* Justify */
+.flex-container.justify-center {
+  justify-content: center;
+}
+.flex-container.justify-sb {
+  justify-content: space-between;
+}
+.flex-container.justify-sa {
+  justify-content: space-around;
+}
+.flex-container.justify-se {
+  justify-content: space-evenly;
+}
+.flex-container.justify-fe {
+  justify-content: flex-end;
+}
+
+#Sidebar {
+  flex: 1 35%;
+}
+#Feed {
+  flex: 2 100%;
+}
+.sidebar-navigation {
+  margin: 0;
+  list-style: none;
+  padding-inline-start: 0;
+}
+.sidebar-navigation li {
+  padding: 0.5em 1em;
+}
+.sidebar-navigation:not(.no-border) li {
+  border-bottom: 1px solid var(--card-border-color);
+}
+.sidebar-navigation:not(.no-border) a:last-child li {
+  border-bottom: none;
+}
+.sidebar-navigation li:hover {
+  background-color: var(--button-background-hover-color);
+}
+.sidebar-navigation a {
+  text-decoration: none;
+  color: var(--page-text-color);
+}
+.card {
+  box-shadow: var(--card-shadow);
+  margin: 1em;
+  background-color: var(--card-background);
+  border-radius: var(--card-radius);
+}
+.card:not(.min-padding):not(.no-padding) > div:not(.min-padding):not(.no-padding) {
+  padding: 0.7em;
+}
+.card > div.min-padding,
+.card.min-padding > div {
+  padding: 0.5em;
+}
+.card .card {
+  /* XXX: Removes shadow from cards on cards */
+  box-shadow: none;
+}
+.card-header {
+  background-color: var(--card-header-background);
+  font-weight: bold;
+}
+.card-header:not(.no-border) {
+  border-top-left-radius: var(--card-radius);
+  border-top-right-radius: var(--card-radius);
+  border-bottom: 1px solid var(--card-border-color);
+}
+.card-footer {
+  background-color: var(--card-footer-background);
+  border-radius: var(--card-radius);
+  font-weight: bold;
+  border-top: 1px solid var(--card-border-color);
+  border-bottom: 1px solid var(--card-border-color);
+}
+.card-post {
+  display: flex;
+  flex-direction: row;
+}
+.card-notfound {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.post-content {
+  flex: 2 100%;
+}
+.profile-username {
+  font-weight: bold;
+}
+.profile-picture {
+  border-radius: 99999em;
+  font-family: "Segoe UI", sans-serif;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2em;
+  width: 64px;
+  height: 64px;
+  background-color: green;
+}
+.profile .profile-username {
+  font-size: 200%;
+}
+.profile .profile-picture {
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  border: 3px solid var(--card-border-color);
+}
+.profile .subtitle {
+  font-size: 100%;
+}
+.profile .profile-information {
+  text-shadow: 0 0 5px #fff;
+}
+.profile-cover {
+  padding-top: 65vh;
+  background-image: url("http://wallpapercave.com/wp/sU4PDPQ.jpg");
+}
+.post-category {
+  font-weight: bold;
+  font-size: 70%;
+}
+
+#Calendar {
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-datetime {
+  margin-inline-end: 10px;
+  flex: 2;
+}
+.post-controls {
+  flex: 1;
+}
+
+#Card-MoreNotes {
+  cursor: pointer;
+}
+#Card-MoreNotes:hover {
+  background-color: var(--button-background-hover-color);
+}
+#Card-MoreNotes:hover:active {
+  background-color: var(--button-background-hover-active-color);
+}
+
+/*** text ***/
+.bold {
+  font-weight: bold;
+}
+.mb {
+  margin-bottom: 10px;
+}
+.ml {
+  margin-left: 10px;
+}
+.mr {
+  margin-right: 10px;
+}
+.mt {
+  margin-top: 10px;
+}
+.ma {
+  margin: 10px;
+}
+.subtitle {
+  font-size: 80%;
+}
+.superscript {
+  position: relative;
+  top: -0.5em;
+  font-size: 80%;
+}
+
+/*** modals ***/
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: modal-fade 300ms;
+}
+
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border-color);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  margin: 15% auto;
+  padding: 20px;
+  width: 50%;
+}
+
+/* The Close Button */
+.close {
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  cursor: pointer;
+}
+
+/*** tooltips ***/
+.hastooltip:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.tooltip {
+  background: var(--tooltip-background-color);
+  color: var(--tooltip-text-color);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+  padding: 10px;
+  position: absolute;
+  margin-top: -0.5em;
+  z-index: 5;
+  min-width: 100px;
+  visibility: collapse;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+/*** controls ***/
+.button {
+  border: 2px solid var(--button-background-color);
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+}
+.button:not(.no-padding) {
+  padding: 4px;
+  margin: 4px;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: var(--button-background-hover-color);
+}
+.button:hover:active {
+  background-color: var(--button-background-hover-active-color);
+}
+.button,
+.button a {
+  text-decoration: none;
+  color: var(--button-text-color);
+}
+
+textarea,
+input[type="password"],
+input[type="text"] {
+  border: 1px solid var(--card-border-color);
+  border-radius: 4px;
+  min-height: 30px;
+}
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
+  min-height: 30px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border-color);
+  background-color: var(--button-background-color);
+  box-shadow: var(--card-shadow);
+}
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: var(--button-background-hover-color);
+}
+input[type="reset"]:hover:active,
+input[type="submit"]:hover:active,
+input[type="button"]:hover:active {
+  background-color: var(--button-background-hover-active-color);
+}
+
+/*** inherited rules for material icons ***/
+/* rules for sizing the icons */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/*** responsive design ***/
+.content,
+.navigation a {
+  transition: padding 300ms;
+}
+
+@media all and (max-width: 1000px) {
+  .content {
+    padding: 0;
+  }
+  .navigation .material-icons {
+    font-size: 16px;
+  }
+  .navigation a {
+    padding: 2px;
+  }
+}
