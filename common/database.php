@@ -49,7 +49,7 @@ class Database {
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
-		$sql = "SET NAMES utf8";
+		$sql = "SET NAMES utf8mb4";
 		$this->conn->query($sql);
 		
 		$sql = "SELECT * FROM profile WHERE userID = '$userid'";
@@ -134,7 +134,7 @@ class Database {
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
-		$sql = "SET NAMES utf8";
+		$sql = "SET NAMES utf8mb4";
 		$this->conn->query($sql);
 
 		$sql =  "SELECT postID, postDate, postContent, userID, sections.displayName, " .
@@ -186,7 +186,7 @@ class Database {
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
-		$sql = "SET NAMES utf8";
+		$sql = "SET NAMES utf8mb4";
 		$this->conn->query($sql);
 
 		$sql =  "SELECT commentID, parentPostID, commentContent, commentDate, " .
