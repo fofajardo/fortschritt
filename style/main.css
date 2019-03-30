@@ -57,6 +57,7 @@
 
 .navigation .tooltip {
   font-weight: bold;
+  top: 0;
   margin-top: 2.5em;
   margin-left: -4.5em;
 }
@@ -223,6 +224,8 @@ body {
 }
 .profile-picture img {
   border-radius: 99999em;
+  width: 64px;
+  height: 64px;
 }
 .profile .profile-username {
   font-size: 200%;
@@ -362,9 +365,7 @@ body {
   border-radius: var(--card-radius);
   padding: 10px;
   position: absolute;
-  margin-top: -0.5em;
   z-index: 5;
-  min-width: 100px;
   visibility: collapse;
   opacity: 0;
   transition: opacity 500ms;
