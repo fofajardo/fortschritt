@@ -14,7 +14,7 @@
   --button-background-hover-active-color: rgba(0, 0, 0, 0.2);
   --button-text-color: #000;
   
-  --card-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+  --card-shadow: 0 0px 3px 0 rgba(0, 0, 0, 0.15);
   --card-background: #fff;
   --card-radius: 2px;
   --card-header-background: rgba(0, 0, 0, 0.05);
