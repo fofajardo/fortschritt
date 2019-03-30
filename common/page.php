@@ -124,7 +124,7 @@ class Page {
 				echo '</div>';
 			}
 			echo '</div>';
-			echo '<div class="subtitle">';
+			echo '<div class="largetitle">';
 			echo nl2br($row[2]);
 			echo '</div>';
 			echo '</div>';
@@ -192,7 +192,7 @@ class Page {
 						echo '</div>';
 					echo '</div>';
 					
-					echo '<div class="subtitle">';
+					echo '<div class="largetitle">';
 						echo nl2br($row[2]);
 					echo '</div>';
 				echo '</div>';

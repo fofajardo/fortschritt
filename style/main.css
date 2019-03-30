@@ -294,6 +294,9 @@ body {
 .subtitle {
   font-size: 80%;
 }
+.largetitle {
+  font-size: 150%;
+}
 .superscript {
   position: relative;
   top: -0.5em;
