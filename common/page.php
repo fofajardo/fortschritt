@@ -152,6 +152,7 @@ class Page {
 				echo '</div>';
 			}
 			if ($is_story) {
+				$this->get_newcomment_card();
 				$this->get_post_comments($row[0]);
 			}
 		}
@@ -248,6 +249,19 @@ class Page {
 			}
 		}
 	}
+	function get_newcomment_card() {
+		echo '<div class="card">';
+		echo '<div class="card-header">';
+		echo 'Leave a comment';
+		echo '</div>';
+		echo '<div class="card-content flex-container column">';
+		echo '<textarea id="Comment-area" placeholder="Type your comment here..."></textarea>';
+		echo '<div class="flex-container mt">';
+		echo '<input id="Comment-send" type="submit" name="submit" value="Post"/>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
+	}
 	function get_newpost_card() {
 		echo '<div class="card">';
 		echo '<div class="card-header">';
@@ -256,6 +270,7 @@ class Page {
 		echo '<div class="card-content flex-container column">';
 		echo '<textarea id="Post-area" placeholder="Type your note here..."></textarea>';
 		echo '<div class="flex-container mt">';
+		echo '<span class="self-center mr">Group:</span>';
 		echo '<select id="GroupSelector-Menu" class="mr">';
 		$this->get_group_options();
 		echo '</select>';

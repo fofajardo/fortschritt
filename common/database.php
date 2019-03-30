@@ -215,7 +215,7 @@ class Database {
 		}
 	}
 
-	// Set
+	// Posts
 	function create_post($userid, $groupid, $content, $sectionid) {
 		$this->create_connection();
 		
@@ -259,6 +259,30 @@ class Database {
 
 		$this->close_connection();
 		return $response;
+	}
+
+	// Comments
+	function create_comment($userid, $content, $postid) {
+		$this->create_connection();
+		
+		$datenow = date("Y-m-d");
+		$sql = "INSERT INTO comments (parentPostID, commentUserID, commentContent, commentDate) " .
+			   "VALUES ('$postid', '$userid', '$content', '$datenow')";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
+	function delete_comment($postid) {
+		// TODO: Stubbed function
+	}
+	function edit_comment($postid, $content) {
+		// TODO: Stubbed function
 	}
 }
 

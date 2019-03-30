@@ -15,6 +15,7 @@
 		"postcreated" => "Your note was posted.",
 		"postdeleted" => "Your note was deleted.",
 		"postedited" => "Your note was edited.",
+		"commentcreated" => "Your comment was posted.",
 		"actionfailed" => "Action failed.");
 	
 	// Default response to return
@@ -80,6 +81,23 @@
 			case "get_edit_modal":
 				if (isset($_REQUEST["post"])) {
 					$response = $page->get_edit_card($_REQUEST["post"]);
+				}
+				break;
+			case "new_comment":
+				if (isset($_REQUEST["content"]) && isset($_REQUEST["post"])) {
+					$postid = sanitize($_REQUEST["post"]);
+					$content = sanitize($_REQUEST["content"]);
+					$userid = sanitize($page->get_user_id());
+					
+					if (strlen(trim($content)) < 10) {
+						$response = $responses["fieldrequirement"];
+						break;
+					}
+					
+					$database = new Database();
+					if ($database->create_comment($userid, $content, $postid)) {
+						$response = $responses["commentcreated"];
+					}
 				}
 				break;
 			case "get_posts":

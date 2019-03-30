@@ -19,6 +19,7 @@
     </head>
     <body>
 		<?php include "common/header.php" ?>
+		<?php include "common/modal_template.php" ?>
 		<main class="content story flex-container">
 			<div id="Feed">
 				<?php $page->get_user_posts(null, true, $get_id, true, null, true); ?>

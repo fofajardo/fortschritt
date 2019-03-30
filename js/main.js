@@ -1,10 +1,16 @@
 
 var Fortscript = {
-    get sendTextArea() {
+    get sendBtn() {
+        return document.getElementById("Post-send");
+    },
+    get sendArea() {
         return document.getElementById("Post-area");
     },
-    get sendTextBtn() {
-        return document.getElementById("Post-send");
+    get commentBtn() {
+        return document.getElementById("Comment-send");
+    },
+    get commentArea() {
+        return document.getElementById("Comment-area");
     },
     get modalDialog() {
         return document.getElementById("Modal");
@@ -21,11 +27,25 @@ var Fortscript = {
     get groupPostMenu() {
         return document.getElementById("GroupSelector-Menu");
     },
+    findGetParameter: function (parameterName) {
+        var result = null,
+            tmp = [];
+        var items = location.search.substr(1).split("&");
+        for (var index = 0; index < items.length; index++) {
+            tmp = items[index].split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        }
+        return result;
+    },
     postCount: 10,
     init: function () {
-        if (Fortscript.sendTextArea) {
-            Fortscript.sendTextBtn.addEventListener("click", Fortscript.sendPost, false);
-            Fortscript.sendTextArea.value = "";
+        if (Fortscript.sendBtn) {
+            Fortscript.sendBtn.addEventListener("click", Fortscript.sendPost, false);
+            Fortscript.sendArea.value = "";
+        }
+        if (Fortscript.commentBtn) {
+            Fortscript.commentBtn.addEventListener("click", Fortscript.sendComment, false);
+            Fortscript.commentArea = "";
         }
         
         // Close the drop-down menu when something else was clicked
@@ -56,7 +76,6 @@ var Fortscript = {
         }
     },
     showDropDown: function (id) {
-        console.log("try");
         document.getElementById("Profile-Dropdown").classList.toggle("visible");
     },
     openModal: function (value, customEvent) {
@@ -91,8 +110,25 @@ var Fortscript = {
         };
 
         let groupid = Fortscript.groupPostMenu.selectedIndex + 1;
-        let params = "action=new&content=" + Fortscript.sendTextArea.value;
+        let params = "action=new&content=" + Fortscript.sendArea.value;
         params += "&group=" + groupid;
+        request.open("POST", "/common/post.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params);
+    },
+    sendComment: function () {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
+            }
+        };
+
+        let params = "action=new_comment&content=" + Fortscript.commentArea.value +
+                     "&post=" + Fortscript.findGetParameter("id");
         request.open("POST", "/common/post.php", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params);
