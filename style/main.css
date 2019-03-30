@@ -221,22 +221,27 @@ body {
   height: 64px;
   background-color: green;
 }
+.profile-picture img {
+  border-radius: 99999em;
+}
 .profile .profile-username {
   font-size: 200%;
 }
 .profile .profile-picture {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-  border: 3px solid var(--card-border-color);
+  width: 128px;
+  height: 128px;
 }
 .profile .subtitle {
   font-size: 100%;
 }
 .profile .profile-information {
-  text-shadow: 0 0 5px #fff;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 0 5px #000;
 }
 .profile-cover {
-  padding-top: 65vh;
-  background-image: url("http://wallpapercave.com/wp/sU4PDPQ.jpg");
+  padding-top: 60vh;
 }
 .post-category {
   font-weight: bold;

@@ -15,11 +15,7 @@
 		<?php include "common/header.php" ?>
 		<?php include "common/modal_template.php" ?>
 		<main class="content">
-			<div class="card profile-cover">
-				<div class="flex-container profile">
-					<?php $page->get_user_card(); ?>
-				</div>
-			</div>
+			<?php $page->get_profile_card($page->get_user_id()); ?>
 			<div class="flex-container">
 				<div id="Sidebar">
 					<div class="card">
@@ -31,7 +27,7 @@
 						</ul>
 					</div>
 				</div>
-				<div id="Feed" userid="<?php echo $page->get_user_id() ?>">
+				<div id="Feed" userid="<?php echo $page->get_user_id(); ?>">
 					<div class="card">
 						<div class="card-header">
 							Your Posts

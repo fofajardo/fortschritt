@@ -41,7 +41,7 @@ class Page {
 		
 		// Profile picture
 		echo '<div class="mr">';
-		$this->get_user_profile_picture($row[1], $row[4]);
+		$this->get_user_profile_picture($row[1], $row[0]);
 		echo '</div>';
 		
 		// User information
@@ -104,7 +104,7 @@ class Page {
 			echo '<div class="card-post">';
 			
 			echo '<div class="mr">';
-				$this->get_user_profile_picture($row[5], $row[6]);
+				$this->get_user_profile_picture($row[5], $row[3]);
 			echo '</div>';
 			
 			echo '<div class="post-content">';
@@ -182,7 +182,7 @@ class Page {
 			echo '<div class="card-post">';
 			
 				echo '<div class="mr">';
-					$this->get_user_profile_picture($row[5], $row[6]);
+					$this->get_user_profile_picture($row[5], $row[4]);
 				echo '</div>';
 				
 				echo '<div class="post-content">';
@@ -207,13 +207,21 @@ class Page {
 		}
 		echo '</div>';
 	}
-	function get_user_profile_picture($name, $picture = null) {
+	function get_user_profile_picture($name, $userid) {
 		echo '<div class="profile-picture flex-container">';
-		if (!isset($picture)) {
-			// TODO
+		$profile_image = sprintf('profiles/%s.jpg', $userid);
+		if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $profile_image)) {
+			printf('<img src="%s"/>', $profile_image);
 		} else {
 			echo substr($name, 0, 1);
 		}
+		echo '</div>';
+	}
+	function get_profile_card($userid) {
+		printf('<div class="card profile-cover" style="background: rgb(150, 150, 150) url(\'profiles/%s_cover.jpg\'); background-size: cover;">', $userid);
+		echo '<div class="flex-container profile">';
+		$this->get_user_card();
+		echo '</div>';
 		echo '</div>';
 	}
 	function get_section_options() {
