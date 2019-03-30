@@ -5,6 +5,14 @@ require_once "storage.php";
 $page = new Page();
 
 class Page {
+	private $messages = null;
+	
+	function __construct() {
+		$this->messages = array(
+			"notfound" => "No more notes.",
+			"nocomments" => "No comments.");
+	}
+	
 	function get_user_id() {
 		$cookie_name = 'userid';
 		if(!isset($_COOKIE[$cookie_name])) {
@@ -13,10 +21,10 @@ class Page {
 		}
 		return $_COOKIE[$cookie_name];
 	}
-	function get_notfound_card() {
+	function get_message_card($message) {
 		echo '<div class="card" id="Card-NotFound">';
 		echo '<div class="card-notfound">';
-		echo 'No more notes.';
+		echo $message;
 		echo '</div>';
 		echo '</div>';
 	}
@@ -33,8 +41,7 @@ class Page {
 		
 		// Profile picture
 		echo '<div class="mr">';
-		printf('<div class="profile-picture flex-container">%s</div>',
-				substr($row[1], 0, 1));
+		$this->get_user_profile_picture($row[1], $row[4]);
 		echo '</div>';
 		
 		// User information
@@ -77,7 +84,7 @@ class Page {
 		$result = $storage->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
 
 		if (!isset($result) || (isset($postid) && $postid == 0)) {
-			$this->get_notfound_card();
+			$this->get_message_card($this->messages["notfound"]);
 			return;
 		}
 
@@ -97,8 +104,7 @@ class Page {
 			echo '<div class="card-post">';
 			
 			echo '<div class="mr">';
-			printf('<div class="profile-picture flex-container">%s</div>',
-					substr($row[5], 0, 1));
+				$this->get_user_profile_picture($row[5], $row[6]);
 			echo '</div>';
 			
 			echo '<div class="post-content">';
@@ -145,7 +151,70 @@ class Page {
 			if ($has_card) {
 				echo '</div>';
 			}
-		}	
+			if ($is_story) {
+				$this->get_post_comments($row[0]);
+			}
+		}
+	}
+	// TODO: Implement proper ajax for progressive posts
+	function get_post_comments($postid, $limit = 999999, $offset = 0) {
+		$storage = new Storage();
+		$result = $storage->get_comments($postid, $limit, $offset);
+
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["nocomments"]);
+			return;
+		}
+
+		// $row[0] = comment ID
+		// $row[1] = parent post ID
+		// $row[2] = comment content
+		// $row[3] = comment date
+		// $row[4] = user ID
+		// $row[5] = user full name
+		// $row[6] = user profile picture
+		// $row[7] = user access level
+		echo '<div class="card">';
+		echo '<div class="card-header">';
+		echo 'Comments';
+		echo '</div>';
+		while ($row = $result->fetch_row()) {
+			echo '<div class="card-post">';
+			
+				echo '<div class="mr">';
+					$this->get_user_profile_picture($row[5], $row[6]);
+				echo '</div>';
+				
+				echo '<div class="post-content">';
+					echo '<div class="post-header flex-container align-start justify-sb">';
+						echo '<div class="post-header-information">';
+						printf('<span class="profile-username mr">%s</span>', $row[5]);
+						echo '</div>';
+					echo '</div>';
+					
+					echo '<div class="subtitle">';
+						echo nl2br($row[2]);
+					echo '</div>';
+				echo '</div>';
+			
+			echo '</div>';
+			
+			echo '<div class="card-footer subtitle flex-container no-padding">';			
+			echo '<div class="post-datetime flex-container align-center justify-fe">';
+			printf("Posted on: %s", date("Y-m-d", strtotime($row[3])));
+			echo '</div>';
+			echo '</div>';
+		}
+		echo '</div>';
+	}
+	function get_user_profile_picture($name, $picture = null) {
+		echo '<div class="profile-picture flex-container">';
+		if (!isset($picture)) {
+			// TODO
+		} else {
+			echo substr($name, 0, 1);
+		}
+		echo '</div>';
 	}
 	function get_section_options() {
 		$storage = new Storage();
@@ -194,9 +263,9 @@ class Page {
 		echo '<div class="card-header">';
 		echo 'Edit Note';
 		echo '</div>';
-		echo '<div class="card-content flex-container justify-sb">';
+		echo '<div class="card-content flex-container column">';
 		printf('<textarea id="Edit-area" placeholder="Type your note here...">%s</textarea>', $content);
-		echo '<input id="Edit-send" type="submit" name="submit" value="Post" onclick="Fortscript.sendEditedPost();"/>';
+		echo '<input id="Edit-send" type="submit" name="submit" value="Edit" onclick="Fortscript.sendEditedPost();"/>';
 		echo '</div>';
 		echo '</div>';
 	}

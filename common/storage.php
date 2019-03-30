@@ -182,6 +182,38 @@ class Storage {
 			return $result;
 		}
 	}
+	function get_comments($postid, $limit = 10, $offset = 0) {
+		$this->create_connection();
+		
+		// Needed to show text with accent marks properly
+		$sql = "SET NAMES utf8";
+		$this->conn->query($sql);
+
+		$sql =  "SELECT commentID, parentPostID, commentContent, commentDate, " .
+				"profile.userID, profile.fullName, profile.profilePicture, " .
+				"profile.accessLevel " .
+				"FROM comments INNER JOIN profile ON commentUserID = profile.userID " .
+				"WHERE parentPostID = $postid";
+		
+		// Limit and offset must come after all parameters
+		$sql .= " LIMIT $offset, $limit";
+
+		$result = $this->conn->query($sql);
+
+		$this->close_connection();
+		
+		// $row[0] = comment ID
+		// $row[1] = parent post ID
+		// $row[2] = comment content
+		// $row[3] = comment date
+		// $row[4] = user ID
+		// $row[5] = user full name
+		// $row[6] = user profile picture
+		// $row[7] = user access level
+		if ($result->num_rows > 0) {
+			return $result;
+		}
+	}
 
 	// Set
 	function create_post($userid, $groupid, $content, $sectionid) {
