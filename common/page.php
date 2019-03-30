@@ -103,15 +103,15 @@ class Page {
 			}
 			echo '<div class="card-post">';
 			
-			echo '<div class="mr">';
+			printf('<div class="mr"><a href="profile?id=%s">', $row[3]);
 				$this->get_user_profile_picture($row[5], $row[3]);
-			echo '</div>';
+			echo '</a></div>';
 			
 			echo '<div class="post-content">';
 			echo '<div class="post-header flex-container align-start justify-sb">';
 			
 			echo '<div class="post-header-information">';
-			printf('<span class="profile-username mr">%s</span>', $row[5]);
+			printf('<span class="profile-username mr"><a href="profile?id=%s">%s</a></span>', $row[3], $row[5]);
 			if ($show_category) {
 				printf('<span class="post-category">to %s</span>', $row[8]);
 			}
@@ -182,14 +182,14 @@ class Page {
 		while ($row = $result->fetch_row()) {
 			echo '<div class="card-post">';
 			
-				echo '<div class="mr">';
+				printf('<div class="mr"><a href="profile?id=%s">', $row[4]);
 					$this->get_user_profile_picture($row[5], $row[4]);
-				echo '</div>';
+				echo '</a></div>';
 				
 				echo '<div class="post-content">';
 					echo '<div class="post-header flex-container align-start justify-sb">';
 						echo '<div class="post-header-information">';
-						printf('<span class="profile-username mr">%s</span>', $row[5]);
+						printf('<span class="profile-username mr"><a href="profile?id=%s">%s</a></span>', $row[4], $row[5]);
 						echo '</div>';
 						if ($this->get_user_id() == $row[4]) {
 							printf('<div class="post-header-controls" commentid="%s">', $row[0]);

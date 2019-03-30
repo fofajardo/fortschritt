@@ -226,6 +226,10 @@ body {
 .profile-username {
   font-weight: bold;
 }
+.profile-username a {
+  color: var(--page-color);
+  text-decoration: none;
+}
 .profile-picture {
   border-radius: 99999em;
   font-family: "Segoe UI", sans-serif;
@@ -241,6 +245,9 @@ body {
   border-radius: 99999em;
   width: 64px;
   height: 64px;
+}
+.card a {
+  text-decoration: none;
 }
 .profile .profile-username {
   font-size: 200%;
