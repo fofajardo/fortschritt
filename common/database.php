@@ -278,8 +278,19 @@ class Database {
 		$this->close_connection();
 		return $response;
 	}
-	function delete_comment($postid) {
-		// TODO: Stubbed function
+	function delete_comment($commentid) {
+		$this->create_connection();
+		
+		$sql = "DELETE FROM comments WHERE comments.commentID = $commentid";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
 	}
 	function edit_comment($postid, $content) {
 		// TODO: Stubbed function

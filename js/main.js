@@ -150,6 +150,23 @@ var Fortscript = {
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params);
     },
+    deleteComment: function (e) {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
+            }
+        };
+
+        let commentid = e.target.parentElement.getAttribute("commentid");
+        let params = "action=delete_comment&post=" + commentid;
+        request.open("POST", "/common/post.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(params);
+    },
     editPost: function (e) {
         let request = new XMLHttpRequest();
 

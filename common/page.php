@@ -191,6 +191,12 @@ class Page {
 						echo '<div class="post-header-information">';
 						printf('<span class="profile-username mr">%s</span>', $row[5]);
 						echo '</div>';
+						if ($this->get_user_id() == $row[4]) {
+							printf('<div class="post-header-controls" commentid="%s">', $row[0]);
+							echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deleteComment(event)">delete_outline</div>';
+							// echo '<div class="button no-padding material-icons md-18 edit-post" onclick="Fortscript.editPost(event)">edit</div>';
+							echo '</div>';
+						}
 					echo '</div>';
 					
 					echo '<div class="largetitle">';

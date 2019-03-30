@@ -16,6 +16,7 @@
 		"postdeleted" => "Your note was deleted.",
 		"postedited" => "Your note was edited.",
 		"commentcreated" => "Your comment was posted.",
+		"commentdeleted" => "Your comment was deleted.",
 		"actionfailed" => "Action failed.");
 	
 	// Default response to return
@@ -97,6 +98,16 @@
 					$database = new Database();
 					if ($database->create_comment($userid, $content, $postid)) {
 						$response = $responses["commentcreated"];
+					}
+				}
+				break;
+			case "delete_comment":
+				if (isset($_REQUEST["post"])) {
+					$commentid = sanitize($_REQUEST["post"]);
+					
+					$database = new Database();
+					if ($database->delete_comment($commentid)) {
+						$response = $responses["commentdeleted"];
 					}
 				}
 				break;
