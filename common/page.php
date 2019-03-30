@@ -35,9 +35,9 @@ class Page {
 		echo '</div>';
 		echo '</div>';		
 	}
-	function get_user_card() {
+	function get_user_card($userid) {
 		$database = new Database();
-		$row = $database->get_profile_info($this->get_user_id());
+		$row = $database->get_profile_info($userid);
 		
 		// Profile picture
 		echo '<div class="mr">';
@@ -56,9 +56,9 @@ class Page {
 		echo '</span>';
 		echo '</div>';
 	}
-	function get_user_groups() {
+	function get_user_groups($userid) {
 		$database = new Database();
-		$profile_info = $database->get_profile_info($this->get_user_id());
+		$profile_info = $database->get_profile_info($userid);
 		
 		$result = $database->get_joined_groups($profile_info[3]);
 		while ($row = $result->fetch_row()) {
@@ -227,7 +227,7 @@ class Page {
 	function get_profile_card($userid) {
 		printf('<div class="card profile-cover" style="background: rgb(150, 150, 150) url(\'profiles/%s_cover.jpg\'); background-size: cover;">', $userid);
 		echo '<div class="flex-container profile">';
-		$this->get_user_card();
+		$this->get_user_card($userid);
 		echo '</div>';
 		echo '</div>';
 	}

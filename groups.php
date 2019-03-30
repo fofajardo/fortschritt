@@ -24,7 +24,7 @@
 			<div id="Sidebar">
 				<div class="card">
 					<div class="flex-container align-center">
-						<?php $page->get_user_card(); ?>
+						<?php $page->get_user_card($page->get_user_id()); ?>
 					</div>
 				</div>
 				<div class="card">
@@ -32,7 +32,7 @@
 						Groups
 					</div>
 					<ul class="sidebar-navigation flex-container column">
-						<?php $page->get_user_groups(); ?>
+						<?php $page->get_user_groups($page->get_user_id()); ?>
 					</ul>
 				</div>
 			</div>

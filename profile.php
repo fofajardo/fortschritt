@@ -2,6 +2,12 @@
 <?php require "common/config.php"; 
 	  require "common/session.php";
 	  require "common/page.php"; ?>
+<?php 
+	$get_id = $page->get_user_id();
+	if (isset($_GET["id"])) {
+		$get_id = $_GET["id"];
+	}
+?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -15,25 +21,25 @@
 		<?php include "common/header.php" ?>
 		<?php include "common/modal_template.php" ?>
 		<main class="content">
-			<?php $page->get_profile_card($page->get_user_id()); ?>
+			<?php $page->get_profile_card($get_id); ?>
 			<div class="flex-container">
 				<div id="Sidebar">
 					<div class="card">
 						<div class="card-header">
-							Groups
+							Joined Groups
 						</div>
 						<ul class="sidebar-navigation flex-container column">
-							<?php $page->get_user_groups(); ?>
+							<?php $page->get_user_groups($get_id); ?>
 						</ul>
 					</div>
 				</div>
-				<div id="Feed" userid="<?php echo $page->get_user_id(); ?>">
+				<div id="Feed" userid="<?php echo $get_id; ?>">
 					<div class="card">
 						<div class="card-header">
 							Your Posts
 						</div>
 					</div>
-					<?php $page->get_user_posts(null, true, null, true, $page->get_user_id()); ?>
+					<?php $page->get_user_posts(null, true, null, true, $get_id); ?>
 					<?php $page->get_moreposts_card('profile'); ?>
 				</div>
 			</div>
