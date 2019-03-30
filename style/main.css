@@ -496,6 +496,7 @@ textarea {
 }
 
 @media all and (max-width: 1000px) {
+  .content.story,
   .content {
     padding: 0;
   }
