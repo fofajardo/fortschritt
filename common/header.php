@@ -23,8 +23,8 @@
 			<input id="Search" type="search" placeholder="Search posts, groups, users, apps, and more"></input>
 		</li>
 		<li class="hastooltip">
-			<a class="material-icons" href="#">notifications</a>
-			<span class="tooltip">Notifications</span>
+			<a class="material-icons" href="messages">mail</a>
+			<span class="tooltip">Messages</span>
 		</li>
 		<li class="flex-container">
 			<div class="hastooltip">
@@ -34,8 +34,7 @@
 			<a id="Profile-Dropdown-Link" class="material-icons dropdown-button"
 			   onclick="Fortscript.showDropDown('Profile-Dropdown');" href="#">arrow_drop_down</a>
 			<div id="Profile-Dropdown" class="dropdown-content">
-				<a href="#">Messages</a>
-				<a href="#">Settings</a>
+				<a href="settings">Settings</a>
 				<a href="logout">Logout</a>
 			</div>
 		</li>
