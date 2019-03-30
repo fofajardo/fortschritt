@@ -235,6 +235,10 @@ body {
   width: 128px;
   height: 128px;
 }
+.profile .profile-picture img {
+  width: 128px;
+  height: 128px;
+}
 .profile .subtitle {
   font-size: 100%;
 }
