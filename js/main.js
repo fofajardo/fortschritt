@@ -23,8 +23,10 @@ var Fortscript = {
     },
     postCount: 10,
     init: function () {
-        Fortscript.sendTextBtn.addEventListener("click", Fortscript.sendPost, false);
-        Fortscript.sendTextArea.value = "";
+        if (Fortscript.sendTextArea) {
+            Fortscript.sendTextBtn.addEventListener("click", Fortscript.sendPost, false);
+            Fortscript.sendTextArea.value = "";
+        }
 
         // Initialize the modal
         if (Fortscript.modalDialog) {
