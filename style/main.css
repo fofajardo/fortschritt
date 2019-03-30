@@ -72,8 +72,7 @@
   align-self: center;
 }
 #Post-area {
-  flex: 1 100%;
-  margin-inline-end: 1em;
+  flex: 1;
 }
 #Post-send {
   flex: 2;
@@ -136,6 +135,19 @@ body {
 }
 .flex-container.justify-fe {
   justify-content: flex-end;
+}
+
+.flex-container .self-center {
+  align-self: center;
+}
+.flex-container .self-start {
+  align-self: flex-start;
+}
+.flex-container .self-end {
+  align-self: flex-end;
+}
+.flex-container .self-baseline {
+  align-self: baseline;
 }
 
 #Sidebar {
