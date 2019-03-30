@@ -326,7 +326,7 @@ body {
   border-radius: 10px;
   box-shadow: var(--card-shadow);
   margin: 15% auto;
-  padding: 20px;
+  padding: 10px 20px;
   width: 50%;
 }
 
@@ -410,6 +410,10 @@ input[type="reset"]:hover:active,
 input[type="submit"]:hover:active,
 input[type="button"]:hover:active {
   background-color: var(--button-background-hover-active-color);
+}
+
+textarea {
+  resize: none;
 }
 
 /*** inherited rules for material icons ***/
