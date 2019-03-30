@@ -27,6 +27,20 @@ var Fortscript = {
             Fortscript.sendTextBtn.addEventListener("click", Fortscript.sendPost, false);
             Fortscript.sendTextArea.value = "";
         }
+        
+        // Close the drop-down menu when something else was clicked
+        document.addEventListener("click", function (event) {
+            if (!event.target.matches('.dropdown-button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('visible')) {
+                        openDropdown.classList.remove('visible');
+                    }
+                }
+            }
+        });
 
         // Initialize the modal
         if (Fortscript.modalDialog) {
@@ -40,6 +54,10 @@ var Fortscript = {
                 }
             }, false);
         }
+    },
+    showDropDown: function (id) {
+        console.log("try");
+        document.getElementById("Profile-Dropdown").classList.toggle("visible");
     },
     openModal: function (value, customEvent) {
         if (Fortscript.modalDialog) {
@@ -66,7 +84,9 @@ var Fortscript = {
 
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                Fortscript.openModal(this.responseText, function () { location.reload(); } );
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
             }
         };
 
@@ -82,7 +102,9 @@ var Fortscript = {
 
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                Fortscript.openModal(this.responseText, function () { location.reload(); } );
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
             }
         };
 
@@ -114,7 +136,9 @@ var Fortscript = {
 
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                Fortscript.openModal(this.responseText, function () { location.reload(); } );
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
             }
         };
 
@@ -128,7 +152,7 @@ var Fortscript = {
     },
     addPosts: function (page) {
         let request = new XMLHttpRequest();
-        
+
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 Fortscript.feedArea.innerHTML += this.responseText;
@@ -139,9 +163,9 @@ var Fortscript = {
                 }
             }
         };
-        
+
         let params = "action=get_posts&";
-        
+
         switch (page) {
             case "dashboard":
                 params += "offset=" + Fortscript.postCount;

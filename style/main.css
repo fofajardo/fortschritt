@@ -58,7 +58,7 @@
 .navigation .tooltip {
   font-weight: bold;
   top: 0;
-  margin-top: 2.5em;
+  margin-top: 2.7em;
   margin-left: -4.5em;
 }
 
@@ -351,6 +351,38 @@ body {
 .close:hover,
 .close:focus {
   cursor: pointer;
+}
+
+/*** dropdowns ***/
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--card-background);
+  min-width: 160px;
+  box-shadow: var(--card-shadow);
+  z-index: 5;
+}
+.navigation .dropdown-content {
+  top: 0;
+  margin-top: 2.7em;
+}
+.dropdown-button {
+  /**/
+}
+.dropdown-content a {
+  color: var(--page-text-color);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {
+  background-color: var(--button-background-hover-color);
+}
+.dropdown-content a:hover:active {
+  background-color: var(--button-background-hover-active-color);
+}
+.visible {
+  display: block;
 }
 
 /*** tooltips ***/

@@ -26,9 +26,18 @@
 			<a class="material-icons" href="#">notifications</a>
 			<span class="tooltip">Notifications</span>
 		</li>
-		<li class="hastooltip">
-			<a class="material-icons" href="profile">account_circle</a>
-			<span class="tooltip">Profile</span>
+		<li class="flex-container">
+			<div class="hastooltip">
+				<a class="material-icons" href="profile">account_circle</a>
+				<span class="tooltip">Profile</span>
+			</div>
+			<a id="Profile-Dropdown-Link" class="material-icons dropdown-button"
+			   onclick="Fortscript.showDropDown('Profile-Dropdown');" href="#">arrow_drop_down</a>
+			<div id="Profile-Dropdown" class="dropdown-content">
+				<a href="#">Messages</a>
+				<a href="#">Settings</a>
+				<a href="logout">Logout</a>
+			</div>
 		</li>
 	</ul>
 </header>
