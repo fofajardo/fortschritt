@@ -63,6 +63,10 @@ class Database {
 				// $row[1] = full name
 				// $row[2] = section ID
 				// $row[3] = joined groups
+				// $row[4] = (to be removed) link to profile picture
+				// $row[5] = (to be removed) link to cover photo
+				// $row[6] = grade level
+				// $row[7] = access level
 				return $row;
 			}
 		}

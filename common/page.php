@@ -53,7 +53,26 @@ class Page {
 		// Grade and Section
 		echo '<span class="subtitle">';
 		printf('Grade %s', $database->get_section_displayname($row[2]));
+		$this->get_access_level($row[7]);
 		echo '</span>';
+		echo '</div>';
+	}
+	function get_access_level($accessid) {
+		echo '<div class="flex-container align-center subtitle bold">';
+		switch ($accessid) {
+			case 0:
+				echo '<span class="material-icons md-18">person</span>';
+				echo 'Student';
+				break;
+			case 1:
+				echo '<span class="material-icons md-18">school</span>';
+				echo 'Teacher';
+				break;
+			case 2:
+				echo '<span class="material-icons md-18">school</span>';
+				echo 'Principal';
+				break;
+		}
 		echo '</div>';
 	}
 	function get_user_groups($userid) {
@@ -110,10 +129,11 @@ class Page {
 			echo '<div class="post-content">';
 			echo '<div class="post-header flex-container align-start justify-sb">';
 			
-			echo '<div class="post-header-information">';
+			echo '<div class="post-header-information flex-container align-center">';
 			printf('<span class="profile-username mr"><a href="profile?id=%s">%s</a></span>', $row[3], $row[5]);
+			$this->get_access_level($row[7]);
 			if ($show_category) {
-				printf('<span class="post-category">to %s</span>', $row[8]);
+				printf('<span class="post-category ml">to %s</span>', $row[8]);
 			}
 			echo '</div>';
 			
@@ -124,6 +144,7 @@ class Page {
 				echo '</div>';
 			}
 			echo '</div>';
+			
 			echo '<div class="largetitle">';
 			echo nl2br($row[2]);
 			echo '</div>';
@@ -188,9 +209,11 @@ class Page {
 				
 				echo '<div class="post-content">';
 					echo '<div class="post-header flex-container align-start justify-sb">';
-						echo '<div class="post-header-information">';
+						echo '<div class="post-header-information flex-container align-center">';
 						printf('<span class="profile-username mr"><a href="profile?id=%s">%s</a></span>', $row[4], $row[5]);
+						$this->get_access_level($row[7]);
 						echo '</div>';
+						
 						if ($this->get_user_id() == $row[4]) {
 							printf('<div class="post-header-controls" commentid="%s">', $row[0]);
 							echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deleteComment(event)">delete_outline</div>';
