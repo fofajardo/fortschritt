@@ -94,6 +94,9 @@ body {
 .content {
   padding: 2em 3.5em;
 }
+.content.story {
+  padding: 2em 15em;
+}
 
 /* Flex */
 .flex-container {
@@ -417,19 +420,15 @@ body {
   padding: 4px;
   margin: 4px;
 }
-.button:hover {
-  cursor: pointer;
-  background-color: var(--button-background-hover-color);
-}
-.button:hover:active {
-  background-color: var(--button-background-hover-active-color);
-}
+
 .button,
-.button a {
+.button a,
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
   text-decoration: none;
   color: var(--button-text-color);
 }
-
 textarea,
 input[type="password"],
 input[type="text"] {
@@ -444,13 +443,15 @@ input[type="button"] {
   border-radius: 4px;
   border: 1px solid var(--card-border-color);
   background-color: var(--button-background-color);
-  box-shadow: var(--card-shadow);
 }
+.button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
+  cursor: pointer;
   background-color: var(--button-background-hover-color);
 }
+.button:hover:active,
 input[type="reset"]:hover:active,
 input[type="submit"]:hover:active,
 input[type="button"]:hover:active {

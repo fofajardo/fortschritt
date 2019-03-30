@@ -19,7 +19,7 @@
     </head>
     <body>
 		<?php include "common/header.php" ?>
-		<main class="content flex-container">
+		<main class="content story flex-container">
 			<div id="Feed">
 				<?php $page->get_user_posts(null, true, $get_id, true, null, true); ?>
 			</div>
