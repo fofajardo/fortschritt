@@ -1,5 +1,5 @@
 <?php
-	require_once "storage.php";
+	require_once "database.php";
 	require_once "page.php";
 	
 	function sanitize($data) {
@@ -41,12 +41,12 @@
 						break;
 					}
 					
-					$storage = new Storage();
+					$database = new Database();
 					
 					$userid = sanitize($page->get_user_id());
-					$sectionid = sanitize($storage->get_profile_info($userid)[2]);
+					$sectionid = sanitize($database->get_profile_info($userid)[2]);
 					
-					if ($storage->create_post($userid, $groupid, $content, $sectionid) === true) {
+					if ($database->create_post($userid, $groupid, $content, $sectionid) === true) {
 						$response = $responses["postcreated"];
 					}
 				}
@@ -61,8 +61,8 @@
 						break;
 					}
 					
-					$storage = new Storage();
-					if ($storage->edit_post($postid, $content)) {
+					$database = new Database();
+					if ($database->edit_post($postid, $content)) {
 						$response = $responses["postedited"];
 					}
 				}
@@ -71,8 +71,8 @@
 				if (isset($_REQUEST["post"])) {
 					$postid = sanitize($_REQUEST["post"]);
 					
-					$storage = new Storage();
-					if ($storage->delete_post($postid)) {
+					$database = new Database();
+					if ($database->delete_post($postid)) {
 						$response = $responses["postdeleted"];
 					}
 				}

@@ -1,6 +1,6 @@
 <?php
 
-require_once "storage.php";
+require_once "database.php";
 
 $page = new Page();
 
@@ -36,8 +36,8 @@ class Page {
 		echo '</div>';		
 	}
 	function get_user_card() {
-		$storage = new Storage();
-		$row = $storage->get_profile_info($this->get_user_id());
+		$database = new Database();
+		$row = $database->get_profile_info($this->get_user_id());
 		
 		// Profile picture
 		echo '<div class="mr">';
@@ -52,15 +52,15 @@ class Page {
 		echo '</span>';
 		// Grade and Section
 		echo '<span class="subtitle">';
-		printf('Grade %s', $storage->get_section_displayname($row[2]));
+		printf('Grade %s', $database->get_section_displayname($row[2]));
 		echo '</span>';
 		echo '</div>';
 	}
 	function get_user_groups() {
-		$storage = new Storage();
-		$profile_info = $storage->get_profile_info($this->get_user_id());
+		$database = new Database();
+		$profile_info = $database->get_profile_info($this->get_user_id());
 		
-		$result = $storage->get_joined_groups($profile_info[3]);
+		$result = $database->get_joined_groups($profile_info[3]);
 		while ($row = $result->fetch_row()) {
 			printf('<a href="groups?id=%s">', $row[0]);
 			echo '<li>';
@@ -70,8 +70,8 @@ class Page {
 		}
 	}
 	function get_group_name($groupid = null) {
-		$storage = new Storage();
-		$group = $storage->get_group_displayname($groupid);
+		$database = new Database();
+		$group = $database->get_group_displayname($groupid);
 		if (isset($group)) {
 			echo $group;
 		}
@@ -79,9 +79,9 @@ class Page {
 	function get_user_posts($groupid = null, $has_card = true, $postid = null,
 							$show_category = true, $userid = null,
 							$is_story = false, $sort_bydate = true, $limit = 10, $offset = 0) {
-		$storage = new Storage();
-		$sectionid = $storage->get_profile_info($this->get_user_id())[2];
-		$result = $storage->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
+		$database = new Database();
+		$sectionid = $database->get_profile_info($this->get_user_id())[2];
+		$result = $database->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
 
 		if (!isset($result) || (isset($postid) && $postid == 0)) {
 			$this->get_message_card($this->messages["notfound"]);
@@ -158,8 +158,8 @@ class Page {
 	}
 	// TODO: Implement proper ajax for progressive posts
 	function get_post_comments($postid, $limit = 999999, $offset = 0) {
-		$storage = new Storage();
-		$result = $storage->get_comments($postid, $limit, $offset);
+		$database = new Database();
+		$result = $database->get_comments($postid, $limit, $offset);
 
 		if (!isset($result)) {
 			$this->get_message_card($this->messages["nocomments"]);
@@ -217,8 +217,8 @@ class Page {
 		echo '</div>';
 	}
 	function get_section_options() {
-		$storage = new Storage();
-		$result = $storage->get_sections();
+		$database = new Database();
+		$result = $database->get_sections();
 		// $row[0] = section ID
 		// $row[1] = display name
 		if ($result->num_rows > 0) {
@@ -228,9 +228,9 @@ class Page {
 		}
 	}
 	function get_group_options() {
-		$storage = new Storage();
-		$profile_info = $storage->get_profile_info($this->get_user_id());
-		$result = $storage->get_joined_groups($profile_info[3]);
+		$database = new Database();
+		$profile_info = $database->get_profile_info($this->get_user_id());
+		$result = $database->get_joined_groups($profile_info[3]);
 		// $row[0] = group ID
 		// $row[1] = display name
 		// $row[2] = admins ID
@@ -257,8 +257,8 @@ class Page {
 		echo '</div>';
 	}
 	function get_edit_card($postid) {
-		$storage = new Storage();
-		$content = $storage->get_posts(null, null, $postid)->fetch_row()[2];
+		$database = new Database();
+		$content = $database->get_posts(null, null, $postid)->fetch_row()[2];
 		echo '<div class="card">';
 		echo '<div class="card-header">';
 		echo 'Edit Note';

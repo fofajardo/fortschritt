@@ -1,6 +1,6 @@
 <?php
 
-require_once "storage.php";
+require_once "database.php";
 
 // TODO: Rewrite session file logic
 // We must store a session cookie instead of storing username + password
@@ -23,10 +23,10 @@ if ($_SERVER['PHP_SELF'] == "/index.php") {
 	}
 	
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$storage = new Storage();
+		$database = new Database();
 		if (!empty($_POST['email']) && !empty($_POST['password'])) {
-			$valid_auth = $storage->is_auth_valid($_POST['email'], $_POST['password']);
-			$userid = $storage->get_userid($_POST['email'], $_POST['password']);
+			$valid_auth = $database->is_auth_valid($_POST['email'], $_POST['password']);
+			$userid = $database->get_userid($_POST['email'], $_POST['password']);
 			if ($valid_auth) {
 				if (isset($_POST['rememberme'])) {
 					/* Set cookie to last 1 year */

@@ -2,7 +2,7 @@
 
 require_once "config.php";
 
-class Storage {
+class Database {
 	// Connection
 	private $conn;
 	function create_connection() {
