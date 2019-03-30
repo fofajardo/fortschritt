@@ -45,7 +45,7 @@ var Fortscript = {
         }
         if (Fortscript.commentBtn) {
             Fortscript.commentBtn.addEventListener("click", Fortscript.sendComment, false);
-            Fortscript.commentArea = "";
+            Fortscript.commentArea.value = "";
         }
         
         // Close the drop-down menu when something else was clicked
