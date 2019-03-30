@@ -35,7 +35,7 @@
 				if (isset($_REQUEST["content"]) && isset($_REQUEST["group"])) {
 					$content = sanitize($_REQUEST["content"]);
 					$groupid = sanitize($_REQUEST["group"]);
-					// 
+					
 					if (strlen(trim($content)) < 10) {
 						$response = $responses["fieldrequirement"];
 						break;
@@ -55,6 +55,11 @@
 				if (isset($_REQUEST["content"]) && isset($_REQUEST["post"])) {
 					$postid = sanitize($_REQUEST["post"]);
 					$content = sanitize($_REQUEST["content"]);
+					
+					if (strlen(trim($content)) < 10) {
+						$response = $responses["fieldrequirement"];
+						break;
+					}
 					
 					$storage = new Storage();
 					if ($storage->edit_post($postid, $content)) {
