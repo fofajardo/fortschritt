@@ -1,7 +1,7 @@
 <?php
 
 require_once "database.php";
-require_once "components/parsedown/parsedown.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/components/parsedown/parsedown.php";
 
 $page = new Page();
 
@@ -425,12 +425,11 @@ class Page {
 				printf('<a href="files/%s">', $row[6]);
 				echo '<div class="button has-border">';
 				echo '<span class="material-icons mr">open_in_browser</span>';
-				echo 'View file';
+				echo 'View attached file';
 				echo '</div></a>';
 			}
 			// Check if we need description
 			if (strlen(trim($row[4])) > 0) {
-				// TODO: Consider using markdown formatting
 				echo '<div class="material-content">';
 				echo $parsedown->text($row[4]);
 				echo '</div>';
