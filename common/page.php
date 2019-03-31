@@ -10,7 +10,8 @@ class Page {
 	function __construct() {
 		$this->messages = array(
 			"notfound" => "No more notes.",
-			"nocomments" => "No comments.");
+			"nocomments" => "No comments.",
+			"nomaterials" => "No materials available.");
 	}
 	
 	function get_user_id() {
@@ -319,6 +320,75 @@ class Page {
 		printf('<textarea id="Edit-area" placeholder="Type your note here...">%s</textarea>', $content);
 		echo '<input id="Edit-send" type="submit" name="submit" value="Edit" onclick="Fortscript.sendEditedPost();"/>';
 		echo '</div>';
+		echo '</div>';
+	}
+
+	function get_material_types_card($groupid) {
+		$database = new Database();
+		$result = $database->get_material_types();
+
+		if (!isset($result)) {
+			return;
+		}
+		
+		// $row[0] = type ID
+		// $row[1] = display name
+		echo '<div class="card min-padding flex-container">';
+		echo '<div class="card-header no-border mr">';
+		echo 'Filter by:';
+		echo '</div>';
+		echo '<ul class="sidebar-navigation no-border flex-container">';
+		while ($row = $result->fetch_row()) {
+			printf('<li><a href="materials?group=%s&type=%s">%s', $groupid, $row[0], $row[1]);
+			echo '</a></li>';
+		}
+		echo '</ul>';
+		echo '</div>';
+	}
+	function get_material_groups_card($typeid) {
+		$database = new Database();
+		$profile_info = $database->get_profile_info($this->get_user_id());
+		$result = $database->get_joined_groups($profile_info[3]);
+		
+		while ($row = $result->fetch_row()) {
+			printf('<a href="materials?group=%s&type=%s">', $row[0], $typeid);
+			echo '<li>';
+			echo $row[1];
+			echo '</li>';
+			echo '</a>';
+		}
+	}
+	function get_materials_card($typeid, $groupid) {
+		$database = new Database();
+		$result = $database->get_materials($typeid, $groupid, $this->get_user_id());
+		
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["nomaterials"]);
+			return;
+		}
+		
+		echo '<div class="card">';
+		
+		echo '<div class="card-header">';
+		echo $this->get_group_name($groupid);
+		echo '</div>';
+		
+		echo '<div class="card-post">';
+		echo '<div class="post-content">';
+		echo '<ul class="sidebar-navigation flex-container column">';
+		// $row[0] = material ID
+		// $row[1] = material type ID
+		// $row[2] = material group ID
+		// $row[3] = material display name
+		// $row[4] = grade level where material should be visible
+		// $row[5] = material file name on server
+		while ($row = $result->fetch_row()) {
+			printf('<a href="materials?id=%s"><li>%s</li></a>', $row[0], $row[3]);
+		}
+		echo '</ul>';
+		echo '</div>';
+		echo '</div>';
+		
 		echo '</div>';
 	}
 }

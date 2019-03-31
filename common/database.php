@@ -148,8 +148,7 @@ class Database {
 				"INNER JOIN profile ON posts.postUserID = profile.userID " .
 				"INNER JOIN groups ON posts.postGroupID = groups.groupID " .
 				"WHERE 1 = 1 ";
-//echo $sql;
-//printf("%s,%s,%s,%s,%s,%s,%s", $groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
+
 		if ($sectionid) {
 			$sql .= " AND posts.sectionID = '$sectionid'";
 		}
@@ -298,6 +297,51 @@ class Database {
 	}
 	function edit_comment($postid, $content) {
 		// TODO: Stubbed function
+	}
+
+	// Materials
+	function get_material_types() {
+		$this->create_connection();
+
+		$sql = "SELECT * FROM material_types";
+		$result = $this->conn->query($sql);
+
+		$this->close_connection();
+		
+		// $row[0] = type ID
+		// $row[1] = display name
+		if ($result->num_rows > 0) {
+			return $result;
+		}
+	}
+	function get_materials($typeid, $groupid, $userid) {
+		$gradelevel = $this->get_profile_info($userid)[6];
+		$this->create_connection();
+		
+		// Needed to show text with accent marks properly
+		$sql = "SET NAMES utf8mb4";
+		$this->conn->query($sql);
+
+		$sql =  "SELECT materialID, materialTypeID, materialGroupID, " .
+				"materialDisplayName, gradeLevel, fileName " .
+				"FROM materials " .
+				"WHERE materialTypeID = $typeid " .
+				"AND materialGroupID = $groupid " .
+				"AND gradeLevel = $gradelevel";
+
+		$result = $this->conn->query($sql);
+
+		$this->close_connection();
+		
+		// $row[0] = material ID
+		// $row[1] = material type ID
+		// $row[2] = material group ID
+		// $row[3] = material display name
+		// $row[4] = grade level where material should be visible
+		// $row[5] = material file name on server
+		if ($result->num_rows > 0) {
+			return $result;
+		}
 	}
 }
 
