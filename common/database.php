@@ -197,7 +197,7 @@ class Database {
 				"profile.accessLevel " .
 				"FROM comments INNER JOIN profile ON commentUserID = profile.userID " .
 				"WHERE parentPostID = $postid";
-		
+		$sql .= " ORDER BY commentDate ASC, commentID ASC";
 		// Limit and offset must come after all parameters
 		$sql .= " LIMIT $offset, $limit";
 
