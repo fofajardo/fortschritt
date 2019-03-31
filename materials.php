@@ -11,6 +11,10 @@
 	if (isset($_GET["type"])) {
 		$typeid = $_GET["type"];
 	}
+	$materialid = 0;
+	if (isset($_GET["id"])) {
+		$materialid = $_GET["id"];
+	}
 ?>
 <html lang="en">
     <head>
@@ -37,8 +41,12 @@
 			</div>
 			<div id="Feed">
 				<?php
-					$page->get_material_types_card($groupid);
-					$page->get_materials_card($typeid, $groupid);
+					if ($materialid == 0) {
+						$page->get_material_types_card($groupid);
+						$page->get_material_list_card($typeid, $groupid);
+					} else {
+						$page->get_material_view_card($materialid);
+					}
 				?>
 			</div>
 		</main>

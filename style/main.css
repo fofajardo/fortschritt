@@ -301,6 +301,14 @@ body {
   background-color: var(--button-background-hover-active-color);
 }
 
+.material-title,
+.material-subject {
+  font-weight: bold;
+}
+.material-title {
+  font-size: 150%;
+}
+
 /*** text ***/
 .bold {
   font-weight: bold;
@@ -430,7 +438,7 @@ body {
 }
 
 /*** controls ***/
-.button {
+.button:not(.has-border) {
   border: 2px solid var(--button-background-color);
   background-color: var(--button-background-color);
   color: var(--button-text-color);
@@ -438,6 +446,12 @@ body {
 .button:not(.no-padding) {
   padding: 4px;
   margin: 4px;
+}
+
+.button.has-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button,
@@ -455,6 +469,7 @@ input[type="text"] {
   border-radius: 4px;
   min-height: 30px;
 }
+.button.has-border,
 input[type="reset"],
 input[type="submit"],
 input[type="button"] {

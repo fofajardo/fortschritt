@@ -1,6 +1,7 @@
 <?php
 
 require_once "database.php";
+require_once "components/parsedown/parsedown.php";
 
 $page = new Page();
 
@@ -11,7 +12,8 @@ class Page {
 		$this->messages = array(
 			"notfound" => "No more notes.",
 			"nocomments" => "No comments.",
-			"nomaterials" => "No materials available.");
+			"nomaterials" => "No materials available.",
+			"notfoundmaterial" => "Material not found.");
 	}
 	
 	function get_user_id() {
@@ -358,7 +360,7 @@ class Page {
 			echo '</a>';
 		}
 	}
-	function get_materials_card($typeid, $groupid) {
+	function get_material_list_card($typeid, $groupid) {
 		$database = new Database();
 		$result = $database->get_materials($typeid, $groupid, $this->get_user_id());
 		
@@ -380,14 +382,62 @@ class Page {
 		// $row[1] = material type ID
 		// $row[2] = material group ID
 		// $row[3] = material display name
-		// $row[4] = grade level where material should be visible
-		// $row[5] = material file name on server
+		// $row[4] = material description
+		// $row[5] = grade level where material should be visible
+		// $row[6] = material file name on server
 		while ($row = $result->fetch_row()) {
 			printf('<a href="materials?id=%s"><li>%s</li></a>', $row[0], $row[3]);
 		}
 		echo '</ul>';
 		echo '</div>';
 		echo '</div>';
+		
+		echo '</div>';
+	}
+	function get_material_view_card($materialid) {
+		$database = new Database();
+		$parsedown = new Parsedown();
+		$parsedown->setSafeMode(true);
+		$result = $database->get_materials(null, null, $this->get_user_id(), $materialid);
+		
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["notfoundmaterial"]);
+			return;
+		}
+		
+		echo '<div class="card">';
+		
+		// $row[0] = material ID
+		// $row[1] = material type ID
+		// $row[2] = material group ID
+		// $row[3] = material display name
+		// $row[4] = material description
+		// $row[5] = grade level where material should be visible
+		// $row[6] = material file name on server
+		while ($row = $result->fetch_row()) {
+			echo '<div class="card-post">';
+			echo '<div class="post-content flex-container column">';
+			printf('<span class="material-title self-center">%s</span>', $row[3]);
+			echo '<span class="material-subject self-center">';
+			echo $this->get_group_name($row[2]);
+			echo '</span>';
+			if (strlen(trim($row[6])) > 0) {
+				printf('<a href="files/%s">', $row[6]);
+				echo '<div class="button has-border">';
+				echo '<span class="material-icons mr">open_in_browser</span>';
+				echo 'View file';
+				echo '</div></a>';
+			}
+			// Check if we need description
+			if (strlen(trim($row[4])) > 0) {
+				// TODO: Consider using markdown formatting
+				echo '<div class="material-content">';
+				echo $parsedown->text($row[4]);
+				echo '</div>';
+			}
+			echo '</div>';
+			echo '</div>';
+		}
 		
 		echo '</div>';
 	}

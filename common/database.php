@@ -314,8 +314,10 @@ class Database {
 			return $result;
 		}
 	}
-	function get_materials($typeid, $groupid, $userid) {
-		$gradelevel = $this->get_profile_info($userid)[6];
+	function get_materials($typeid, $groupid, $userid, $materialid = null) {
+		if ($userid) {
+			$gradelevel = $this->get_profile_info($userid)[6];
+		}
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
@@ -323,12 +325,21 @@ class Database {
 		$this->conn->query($sql);
 
 		$sql =  "SELECT materialID, materialTypeID, materialGroupID, " .
-				"materialDisplayName, gradeLevel, fileName " .
+				"materialDisplayName, materialDescription, gradeLevel, fileName " .
 				"FROM materials " .
-				"WHERE materialTypeID = $typeid " .
-				"AND materialGroupID = $groupid " .
-				"AND gradeLevel = $gradelevel";
-
+				"WHERE 1 = 1";
+		if ($typeid) {
+			$sql .= " AND materialTypeID = $typeid";
+		}
+		if ($groupid) {
+			$sql .= " AND materialGroupID = $groupid";
+		}
+		if ($userid) {
+			$sql .= " AND gradeLevel = $gradelevel";
+		}
+		if ($materialid) {
+			$sql .= " AND materialID = $materialid";
+		}
 		$result = $this->conn->query($sql);
 
 		$this->close_connection();
@@ -337,8 +348,9 @@ class Database {
 		// $row[1] = material type ID
 		// $row[2] = material group ID
 		// $row[3] = material display name
-		// $row[4] = grade level where material should be visible
-		// $row[5] = material file name on server
+		// $row[4] = material description
+		// $row[5] = grade level where material should be visible
+		// $row[6] = material file name on server
 		if ($result->num_rows > 0) {
 			return $result;
 		}
