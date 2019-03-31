@@ -22,6 +22,7 @@
 		<?php include "common/modal_template.php" ?>
 		<main class="content flex-container">
 			<div id="Sidebar">
+				<div class="sticky">
 				<div class="card">
 					<div class="flex-container align-center">
 						<?php $page->get_user_card($page->get_user_id()); ?>
@@ -34,6 +35,7 @@
 					<ul class="sidebar-navigation flex-container column">
 						<?php $page->get_user_groups($page->get_user_id()); ?>
 					</ul>
+				</div>
 				</div>
 			</div>
 			<div id="Feed" groupid="<?php echo $get_id ?>">
