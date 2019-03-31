@@ -350,7 +350,7 @@ class Page {
 	function get_material_groups_card($typeid) {
 		$database = new Database();
 		$profile_info = $database->get_profile_info($this->get_user_id());
-		$result = $database->get_joined_groups($profile_info[3]);
+		$result = $database->get_joined_groups($profile_info[3], true);
 		
 		while ($row = $result->fetch_row()) {
 			printf('<a href="materials?group=%s&type=%s">', $row[0], $typeid);

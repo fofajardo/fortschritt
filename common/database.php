@@ -117,10 +117,13 @@ class Database {
 			return $result;
 		}
 	}
-	function get_joined_groups($groupids) {
+	function get_joined_groups($groupids, $only_subjects = false) {
 		$this->create_connection();
 
 		$sql = "SELECT * FROM groups WHERE groupID in ($groupids)";
+		if ($only_subjects) {
+			$sql .= " AND canStoreMaterials = 1";
+		}
 		$result = $this->conn->query($sql);
 				
 		$this->close_connection();
