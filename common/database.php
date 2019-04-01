@@ -383,7 +383,7 @@ class Database {
 			   "materialGroupID = '$groupid', " .
 			   "fileName = '$filename' " .
 			   "WHERE materialID = $materialid";
-echo $sql;
+
 		$response = false;
 		if ($this->conn->query($sql) === TRUE) {
 			$response = true;
