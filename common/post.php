@@ -1,6 +1,7 @@
 <?php
 	require_once "database.php";
 	require_once "page.php";
+	require_once "storage.php";
 	
 	function sanitize($data) {
 		$data = trim($data);
@@ -124,6 +125,7 @@
 					$groupid = sanitize($_REQUEST["group"]);
 					$title   = sanitize($_REQUEST["title"]);
 					$typeid = sanitize($_REQUEST["category"]);
+					$filename = null;
 					
 					if (strlen(trim($title)) < 4) {
 						$response = $responses["fieldrequirement"];
@@ -137,11 +139,13 @@
 					if (!$can_edit) {
 						return;
 					}
-					//if (isset($_REQUEST["file"]) {
-						// TODO: stubbed function
-						//echo 'Has file!';
-					//}
-					if ($database->edit_material($materialid, $title, $groupid, $content, $typeid, sanitize($_FILES['file']['name'])) === true) {
+					
+					$storage = new Storage();
+					if (isset($_FILES["file"]) && $storage->manage_file($_FILES["file"], 'files')) {
+						$filename = sanitize($_FILES['file']['name']);
+					}
+					
+					if ($database->edit_material($materialid, $title, $groupid, $content, $typeid, $filename) === true) {
 						$response = $responses["materialedited"];
 					}
 				}

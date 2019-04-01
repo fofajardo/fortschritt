@@ -375,16 +375,17 @@ class Database {
 		}
 	}
 	// title, group, content, file
-	function edit_material($materialid, $title, $groupid, $content, $typeid, $filename) {
+	function edit_material($materialid, $title, $groupid, $content, $typeid, $filename = null) {
 		$this->create_connection();
 				
 		$sql = "UPDATE materials SET materialDisplayName = '$title', " .
 			   "materialDescription = '$content', " .
 			   "materialGroupID = '$groupid', " .
-			   "materialTypeID = '$typeid', " .
-			   "fileName = '$filename' " .
-			   "WHERE materialID = $materialid";
-
+			   "materialTypeID = '$typeid'";
+		if ($filename) {
+			$sql .= ", fileName = '$filename'";
+		}
+		$sql .= " WHERE materialID = $materialid";
 		$response = false;
 		if ($this->conn->query($sql) === TRUE) {
 			$response = true;
