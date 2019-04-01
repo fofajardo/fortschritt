@@ -27,6 +27,9 @@ var Fortscript = {
     get groupPostMenu() {
         return document.getElementById("GroupSelector-Menu");
     },
+    get mainForm() {
+        return document.getElementById("main-form");
+    },
     findGetParameter: function (parameterName) {
         var result = null,
             tmp = [];
@@ -64,7 +67,9 @@ var Fortscript = {
             Fortscript.commentBtn.addEventListener("click", Fortscript.sendComment, false);
             Fortscript.commentArea.value = "";
         }
-        
+        if (Fortscript.mainForm) {
+            Fortscript.mainForm.addEventListener("submit", Fortscript.sendMaterial);
+        }
         // Close the drop-down menu when something else was clicked
         document.addEventListener("click", function (event) {
             if (!event.target.matches('.dropdown-button')) {
@@ -220,7 +225,9 @@ var Fortscript = {
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params);
     },
-    sendMaterial: function () {
+    sendMaterial: function (e) {
+        e.preventDefault();
+        
         let request = new XMLHttpRequest();
 
         request.onreadystatechange = function () {
@@ -231,8 +238,7 @@ var Fortscript = {
             }
         };
         
-        let form = document.getElementById("material-form");
-        let formData = new FormData(form);;
+        let formData = new FormData(Fortscript.mainForm);
         request.open("POST", "/common/post.php");
         request.send(formData);
     },

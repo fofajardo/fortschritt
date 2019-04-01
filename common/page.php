@@ -498,7 +498,7 @@ class Page {
 		// $row[6] = material file name on server
 		while ($row = $result->fetch_row()) {
 			echo '<div class="card-post">';
-			echo '<form id="material-form" enctype="multipart/form-data" class="post-content flex-container column">';
+			echo '<form id="main-form" action="/common/post.php" method="POST" enctype="multipart/form-data" class="post-content flex-container column">';
 			
 			echo '<span class="material-title">Edit Material</span>';
 			// action for post.php
@@ -539,7 +539,7 @@ class Page {
 			echo '<span class="bold">Content or Description: (uses <a href="https://www.markdowntutorial.com/">Markdown</a> for formatting!)</span>';
 			printf('<textarea name="content" class="resizable">%s</textarea>', $row[4]);
 			
-			echo '<input type="button" value="Submit" onclick="Fortscript.sendMaterial();"/>';
+			echo '<button type="submit" class="button">Submit</button>';
 			echo '</form>';
 			echo '</div>';
 		}
