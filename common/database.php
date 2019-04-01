@@ -396,6 +396,37 @@ class Database {
 		$this->close_connection();
 		return $response;
 	}
+	function create_material($title, $groupid, $content, $typeid, $filename = null) {
+		$this->create_connection();
+				
+		// FIXME: NO GRADE LEVEL SETTING!!!
+		$sql = "INSERT INTO materials (materialTypeID, materialGroupID, materialDisplayName, materialDescription, gradeLevel, fileName) " .
+			   "VALUES ('$typeid', '$groupid', '$title', '$content', '9', '$filename')";
+			   
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
+	function delete_material($materialid) {
+		$this->create_connection();
+		
+		$sql = "DELETE FROM materials WHERE materialID = $materialid";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
 }
 
 ?>

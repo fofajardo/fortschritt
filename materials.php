@@ -45,7 +45,7 @@
 			</div>
 			<div id="Feed">
 				<?php
-					if ($materialid == 0) {
+					if ($materialid == 0 && $action != "new") {
 						$page->get_material_types_card($groupid);
 						$page->get_material_list_card($typeid, $groupid);
 					} else {
@@ -54,7 +54,13 @@
 								$page->get_material_view_card($materialid);
 								break;
 							case "edit":
-								$page->get_material_add_edit_card($materialid);
+								$page->get_material_edit_card($materialid);
+								break;
+							case "delete":
+								$page->get_material_delete_card($materialid);
+								break;
+							case "new":
+								$page->get_material_add_card();
 								break;
 							default:
 								$page->get_message_card($page->get_message("invalidaction"));

@@ -385,18 +385,25 @@ class Page {
 	}
 	function get_material_list_card($typeid, $groupid) {
 		$database = new Database();
+		$user_can_edit = $database->user_can_edit($this->get_user_id());
 		$result = $database->get_materials($typeid, $groupid, $this->get_user_id());
+
+		echo '<div class="card">';
+		
+		echo '<div class="card-header flex-container justify-sb align-center">';
+		echo $this->get_group_name($groupid);
+		if ($user_can_edit) {
+			echo '<a href="materials?action=new" class="flex-container button no-padding">';
+			echo '<span class="material-icons">add</span>';
+			echo 'Add Material';
+			echo '</a>';
+		}
+		echo '</div>';
 		
 		if (!isset($result)) {
 			$this->get_message_card($this->messages["nomaterials"]);
 			return;
 		}
-		
-		echo '<div class="card">';
-		
-		echo '<div class="card-header">';
-		echo $this->get_group_name($groupid);
-		echo '</div>';
 		
 		echo '<div class="card-post">';
 		echo '<div class="post-content">';
@@ -457,7 +464,12 @@ class Page {
 				printf('<a href="materials?id=%s&action=edit">', $row[0]);
 				echo '<div class="button has-border">';
 				echo '<span class="material-icons mr">create</span>';
-				echo 'Edit Material';
+				echo 'Edit';
+				echo '</div></a>';
+				printf('<a href="materials?id=%s&action=delete">', $row[0]);
+				echo '<div class="button has-border">';
+				echo '<span class="material-icons mr">delete_outline</span>';
+				echo 'Delete';
 				echo '</div></a>';
 			}
 			echo '</div>';
@@ -473,11 +485,11 @@ class Page {
 		
 		echo '</div>';
 	}
-	function get_material_add_edit_card($materialid) {
+	function get_material_edit_card($materialid) {
 		$database = new Database();
 		$user_can_edit = $database->user_can_edit($this->get_user_id());
 		$result = $database->get_materials(null, null, $this->get_user_id(), $materialid);
-		
+	
 		if (!isset($result)) {
 			$this->get_message_card($this->messages["notfoundmaterial"]);
 			return;
@@ -496,53 +508,153 @@ class Page {
 		// $row[4] = material description
 		// $row[5] = grade level where material should be visible
 		// $row[6] = material file name on server
-		while ($row = $result->fetch_row()) {
-			echo '<div class="card-post">';
-			echo '<form id="main-form" action="/common/post.php" method="POST" enctype="multipart/form-data" class="post-content flex-container column">';
-			
-			echo '<span class="material-title">Edit Material</span>';
-			// action for post.php
-			echo '<input type="hidden" name="action" value="edit_material" />';
-			printf('<input type="hidden" name="id" value="%s" />', $row[0]);
-			
-			echo '<div class="flex-container align-center mb">';
-				echo '<span class="column-1 bold">Title:</span>';
-				printf('<input name="title" class="column-2" type="text" id="Material-Title" value="%s"/>', $row[3]);
-			echo '</div>';
-			
-			echo '<div class="flex-container align-center mb">';
-				echo '<span class="column-1 bold">Group:</span>';
-				echo '<select name="group" class="column-2" id="Material-Group">';
-				$this->get_group_options(true, $row[2]);
-				echo '</select>';
-			echo '</div>';
-			
-			echo '<div class="flex-container align-center mb">';
-				echo '<span class="column-1 bold">Category:</span>';
-				echo '<select name="category" class="column-2" id="Material-Type">';
-				$this->get_material_types_options($row[1]);
-				echo '</select>';
-			echo '</div>';
-			
-			echo '<div class="flex-container align-center mb">';
-				echo '<span class="column-1 bold">Attachment:</span>';
-				printf('<input name="file" class="column-2" type="file" id="Material-File" value="%s"></input>', $row[3]);
-			echo '</div>';
-			
-			echo '<div class="flex-container align-center mb">';
-				echo '<span class="column-1 bold">Current attachment:</span>';
-				if (strlen(trim($row[6])) > 0) {
-					printf('<span class="column-2">%s</span>', $row[6]);
-				}
-			echo '</div>';
-			
-			echo '<span class="bold">Content or Description: (uses <a href="https://www.markdowntutorial.com/">Markdown</a> for formatting!)</span>';
-			printf('<textarea name="content" class="resizable">%s</textarea>', $row[4]);
-			
-			echo '<button type="submit" class="button">Submit</button>';
-			echo '</form>';
-			echo '</div>';
+		$row = $result->fetch_row();
+		echo '<div class="card-post">';
+		echo '<form id="main-form" action="/common/post.php" method="POST" enctype="multipart/form-data" class="post-content flex-container column">';
+		
+		echo '<span class="material-title">Edit Material</span>';
+		// action for post.php
+		echo '<input type="hidden" name="action" value="edit_material" />';
+		printf('<input type="hidden" name="id" value="%s" />', $row[0]);
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Title:</span>';
+			printf('<input name="title" class="column-2" type="text" id="Material-Title" value="%s"/>', $row[3]);
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Group:</span>';
+			echo '<select name="group" class="column-2" id="Material-Group">';
+			$this->get_group_options(true, $row[2]);
+			echo '</select>';
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Category:</span>';
+			echo '<select name="category" class="column-2" id="Material-Type">';
+			$this->get_material_types_options($row[1]);
+			echo '</select>';
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Attachment:</span>';
+			printf('<input name="file" class="column-2" type="file" id="Material-File" value="%s"></input>', $row[3]);
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Current attachment:</span>';
+			if (strlen(trim($row[6])) > 0) {
+				printf('<span class="column-2">%s</span>', $row[6]);
+			}
+		echo '</div>';
+		
+		echo '<span class="bold">Content or Description: (uses <a href="https://www.markdowntutorial.com/">Markdown</a> for formatting!)</span>';
+		printf('<textarea name="content" class="resizable">%s</textarea>', $row[4]);
+		
+		echo '<button type="submit" class="button">Submit</button>';
+		echo '</form>';
+		echo '</div>';
+		
+		echo '</div>';
+	}
+	function get_material_add_card() {
+		$database = new Database();
+		$user_can_edit = $database->user_can_edit($this->get_user_id());
+
+		if (!$user_can_edit) {
+			$this->get_message_card($this->messages["nopermissions"]);
+			return;
 		}
+		
+		echo '<div class="card">';
+		
+		// $row[0] = material ID
+		// $row[1] = material type ID
+		// $row[2] = material group ID
+		// $row[3] = material display name
+		// $row[4] = material description
+		// $row[5] = grade level where material should be visible
+		// $row[6] = material file name on server
+		$row = array(
+			null, 1, 1, null, null, null, null
+		);
+		echo '<div class="card-post">';
+		echo '<form id="main-form" action="/common/post.php" method="POST" enctype="multipart/form-data" class="post-content flex-container column">';
+		
+		printf('<span class="material-title">Create new Material</span>');
+		// action for post.php
+		echo '<input type="hidden" name="action" value="new_material" />';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Title:</span>';
+			printf('<input name="title" class="column-2" type="text" id="Material-Title" value="%s"/>', $row[3]);
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Group:</span>';
+			echo '<select name="group" class="column-2" id="Material-Group">';
+			$this->get_group_options(true, $row[2]);
+			echo '</select>';
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Category:</span>';
+			echo '<select name="category" class="column-2" id="Material-Type">';
+			$this->get_material_types_options($row[1]);
+			echo '</select>';
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Attachment:</span>';
+			printf('<input name="file" class="column-2" type="file" id="Material-File" value="%s"></input>', $row[3]);
+		echo '</div>';
+		
+		echo '<div class="flex-container align-center mb">';
+			echo '<span class="column-1 bold">Current attachment:</span>';
+			if (strlen(trim($row[6])) > 0) {
+				printf('<span class="column-2">%s</span>', $row[6]);
+			}
+		echo '</div>';
+		
+		echo '<span class="bold">Content or Description: (uses <a href="https://www.markdowntutorial.com/">Markdown</a> for formatting!)</span>';
+		printf('<textarea name="content" class="resizable">%s</textarea>', $row[4]);
+		
+		echo '<button type="submit" class="button">Submit</button>';
+		echo '</form>';
+		echo '</div>';
+		
+		echo '</div>';
+	}
+	function get_material_delete_card($materialid) {
+		$database = new Database();
+		$user_can_edit = $database->user_can_edit($this->get_user_id());
+		$result = $database->get_materials(null, null, $this->get_user_id(), $materialid);
+	
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["notfoundmaterial"]);
+			return;
+		}
+		if (!$user_can_edit) {
+			$this->get_message_card($this->messages["nopermissions"]);
+			return;
+		}
+		
+		echo '<div class="card">';
+		
+		// $row[0] = material ID
+		$row = $result->fetch_row();
+		echo '<div class="card-post">';
+		echo '<form id="main-form" action="/common/post.php" method="POST" enctype="multipart/form-data" class="post-content flex-container column">';
+		
+		// action for post.php
+		echo '<input type="hidden" name="action" value="delete_material" />';
+		printf('<input type="hidden" name="id" value="%s" />', $row[0]);
+		echo '<span class="material-title">Are you sure you want to permanently delete this material?</span>';
+		
+		echo '<button type="submit" class="button">Yes</button>';
+		echo '<input type="button" class="button" onclick="location.assign(Fortscript.removeParameter(\'action\', location.href));" value="No"/>';
+		echo '</form>';
+		echo '</div>';
 		
 		echo '</div>';
 	}

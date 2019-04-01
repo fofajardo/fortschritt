@@ -16,6 +16,8 @@
 		"postcreated" => "Your note was posted.",
 		"postdeleted" => "Your note was deleted.",
 		"postedited" => "Your note was edited.",
+		"materialcreated" => "The material was posted.",
+		"materialdeleted" => "The material was deleted.",
 		"materialedited" => "The material was edited.",
 		"commentcreated" => "Your comment was posted.",
 		"commentdeleted" => "Your comment was deleted.",
@@ -114,7 +116,37 @@
 				}
 				break;
 			case "new_material":
-				// TODO: Stubbed function
+				// title, group, content, file
+				if (isset($_REQUEST["title"]) && isset($_REQUEST["category"]) &&
+					isset($_REQUEST["group"]) && isset($_REQUEST["content"])) {
+					$content = sanitize($_REQUEST["content"]);
+					$groupid = sanitize($_REQUEST["group"]);
+					$title   = sanitize($_REQUEST["title"]);
+					$typeid = sanitize($_REQUEST["category"]);
+					$filename = null;
+					
+					if (strlen(trim($title)) < 4) {
+						$response = $responses["fieldrequirement"];
+						break;
+					}
+					
+					$database = new Database();
+					
+					$userid = sanitize($page->get_user_id());
+					$can_edit = $database->user_can_edit($userid);
+					if (!$can_edit) {
+						return;
+					}
+					
+					$storage = new Storage();
+					if (isset($_FILES["file"]) && $storage->manage_file($_FILES["file"], 'files')) {
+						$filename = sanitize($_FILES['file']['name']);
+					}
+					
+					if ($database->create_material($title, $groupid, $content, $typeid, $filename) === true) {
+						$response = $responses["materialcreated"];
+					}
+				}
 				break;
 			case "edit_material":
 				// title, group, content, file
@@ -147,6 +179,23 @@
 					
 					if ($database->edit_material($materialid, $title, $groupid, $content, $typeid, $filename) === true) {
 						$response = $responses["materialedited"];
+					}
+				}
+				break;
+			case "delete_material":
+				if (isset($_REQUEST["id"])) {
+					$materialid = sanitize($_REQUEST["id"]);
+					
+					$database = new Database();
+					
+					$userid = sanitize($page->get_user_id());
+					$can_edit = $database->user_can_edit($userid);
+					if (!$can_edit) {
+						return;
+					}
+					
+					if ($database->delete_material($materialid) === true) {
+						$response = $responses["materialdeleted"];
 					}
 				}
 				break;
