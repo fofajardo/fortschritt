@@ -15,6 +15,7 @@
 		"postcreated" => "Your note was posted.",
 		"postdeleted" => "Your note was deleted.",
 		"postedited" => "Your note was edited.",
+		"materialedited" => "The material was edited.",
 		"commentcreated" => "Your comment was posted.",
 		"commentdeleted" => "Your comment was deleted.",
 		"actionfailed" => "Action failed.");
@@ -108,6 +109,39 @@
 					$database = new Database();
 					if ($database->delete_comment($commentid)) {
 						$response = $responses["commentdeleted"];
+					}
+				}
+				break;
+			case "new_material":
+				// TODO: Stubbed function
+				break;
+			case "edit_material":
+				// title, group, content, file
+				if (isset($_REQUEST["id"]) && isset($_REQUEST["title"]) &&
+					isset($_REQUEST["group"]) && isset($_REQUEST["content"])) {
+					$materialid = sanitize($_REQUEST["id"]);
+					$content = sanitize($_REQUEST["content"]);
+					$groupid = sanitize($_REQUEST["group"]);
+					$title   = sanitize($_REQUEST["title"]);
+					
+					if (strlen(trim($title)) < 4) {
+						$response = $responses["fieldrequirement"];
+						break;
+					}
+					
+					$database = new Database();
+					
+					$userid = sanitize($page->get_user_id());
+					$can_edit = $database->user_can_edit($userid);
+					if (!$can_edit) {
+						return;
+					}
+					//if (isset($_REQUEST["file"]) {
+						// TODO: stubbed function
+						//echo 'Has file!';
+					//}
+					if ($database->edit_material($materialid, $title, $groupid, $content, sanitize($_FILES['file']['name'])) === true) {
+						$response = $responses["materialedited"];
 					}
 				}
 				break;

@@ -10,12 +10,13 @@ class Page {
 	
 	function __construct() {
 		$this->messages = array(
+			"invalidaction" => "Invalid action.",
 			"notfound" => "No more notes.",
 			"nocomments" => "No comments.",
 			"nomaterials" => "No materials available.",
+			"nopermissions" => "You don't have the required permissions to access this content.",
 			"notfoundmaterial" => "Material not found.");
 	}
-	
 	function get_user_id() {
 		$cookie_name = 'userid';
 		if(!isset($_COOKIE[$cookie_name])) {
@@ -23,6 +24,9 @@ class Page {
 			return 0;
 		}
 		return $_COOKIE[$cookie_name];
+	}
+	function get_message($key) {
+		return $this->messages[$key];
 	}
 	function get_message_card($message) {
 		echo '<div class="card" id="Card-NotFound">';
@@ -268,16 +272,20 @@ class Page {
 			}
 		}
 	}
-	function get_group_options() {
+	function get_group_options($only_subjects = false, $default_index = null) {
 		$database = new Database();
 		$profile_info = $database->get_profile_info($this->get_user_id());
-		$result = $database->get_joined_groups($profile_info[3]);
+		$result = $database->get_joined_groups($profile_info[3], $only_subjects);
 		// $row[0] = group ID
 		// $row[1] = display name
 		// $row[2] = admins ID
 		if ($result->num_rows > 0) {
 			while ($row = $result->fetch_row()) {
-				printf('<option value="%s">%s</option>', $row[0], $row[1]);
+				if (isset($default_index) && $default_index == $row[0]) {
+					printf('<option value="%s" selected>%s</option>', $row[0], $row[1]);
+				} else {
+					printf('<option value="%s">%s</option>', $row[0], $row[1]);
+				}
 			}
 		}
 	}
@@ -398,6 +406,7 @@ class Page {
 		$database = new Database();
 		$parsedown = new Parsedown();
 		$parsedown->setSafeMode(true);
+		$user_can_edit = $database->user_can_edit($this->get_user_id());
 		$result = $database->get_materials(null, null, $this->get_user_id(), $materialid);
 		
 		if (!isset($result)) {
@@ -421,6 +430,7 @@ class Page {
 			echo '<span class="material-subject self-center">';
 			echo $this->get_group_name($row[2]);
 			echo '</span>';
+			echo '<div class="flex-container align-center justify-center">';
 			if (strlen(trim($row[6])) > 0) {
 				printf('<a href="files/%s">', $row[6]);
 				echo '<div class="button has-border">';
@@ -428,6 +438,14 @@ class Page {
 				echo 'View attached file';
 				echo '</div></a>';
 			}
+			if ($user_can_edit) {
+				printf('<a href="materials?id=%s&action=edit">', $row[0]);
+				echo '<div class="button has-border">';
+				echo '<span class="material-icons mr">create</span>';
+				echo 'Edit Material';
+				echo '</div></a>';
+			}
+			echo '</div>';
 			// Check if we need description
 			if (strlen(trim($row[4])) > 0) {
 				echo '<div class="material-content">';
@@ -435,6 +453,72 @@ class Page {
 				echo '</div>';
 			}
 			echo '</div>';
+			echo '</div>';
+		}
+		
+		echo '</div>';
+	}
+	function get_material_add_edit_card($materialid) {
+		$database = new Database();
+		$user_can_edit = $database->user_can_edit($this->get_user_id());
+		$result = $database->get_materials(null, null, $this->get_user_id(), $materialid);
+		
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["notfoundmaterial"]);
+			return;
+		}
+		if (!$user_can_edit) {
+			$this->get_message_card($this->messages["nopermissions"]);
+			return;
+		}
+		
+		echo '<div class="card">';
+		
+		// $row[0] = material ID
+		// $row[1] = material type ID
+		// $row[2] = material group ID
+		// $row[3] = material display name
+		// $row[4] = material description
+		// $row[5] = grade level where material should be visible
+		// $row[6] = material file name on server
+		while ($row = $result->fetch_row()) {
+			echo '<div class="card-post">';
+			echo '<form id="material-form" enctype="multipart/form-data" class="post-content flex-container column">';
+			
+			echo '<span class="material-title">Edit Material</span>';
+			// action for post.php
+			echo '<input type="hidden" name="action" value="edit_material" />';
+			printf('<input type="hidden" name="id" value="%s" />', $row[0]);
+			
+			echo '<div class="flex-container align-center mb">';
+				echo '<span class="column-1 bold">Title:</span>';
+				printf('<input name="title" class="column-2" type="text" id="Material-Title" value="%s"/>', $row[3]);
+			echo '</div>';
+			
+			echo '<div class="flex-container align-center mb">';
+				echo '<span class="column-1 bold">Group:</span>';
+				echo '<select name="group" class="column-2" id="Material-Group">';
+				$this->get_group_options(true, $row[2]);
+				echo '</select>';
+			echo '</div>';
+			
+			echo '<div class="flex-container align-center mb">';
+				echo '<span class="column-1 bold">Attachment:</span>';
+				printf('<input name="file" class="column-2" type="file" id="Material-File" value="%s"></input>', $row[3]);
+			echo '</div>';
+			
+			echo '<div class="flex-container align-center mb">';
+				echo '<span class="column-1 bold">Current attachment:</span>';
+				if (strlen(trim($row[6])) > 0) {
+					printf('<span class="column-2">%s</span>', $row[6]);
+				}
+			echo '</div>';
+			
+			echo '<span class="bold">Content/Description:</span>';
+			printf('<textarea name="content" class="resizable" id="Post-area">%s</textarea>', $row[4]);
+			
+			echo '<input type="button" value="Submit" onclick="Fortscript.sendMaterial();"/>';
+			echo '</form>';
 			echo '</div>';
 		}
 		

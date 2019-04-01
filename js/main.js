@@ -203,6 +203,22 @@ var Fortscript = {
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(params);
     },
+    sendMaterial: function () {
+        let request = new XMLHttpRequest();
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                Fortscript.openModal(this.responseText, function () {
+                    location.reload();
+                });
+            }
+        };
+        let form = document.getElementById("material-form");
+        let formData = new FormData(form);;
+        request.open("POST", "/common/post.php");
+        //request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(formData);
+    },
     addPosts: function (page) {
         let request = new XMLHttpRequest();
 

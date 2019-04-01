@@ -15,6 +15,10 @@
 	if (isset($_GET["id"])) {
 		$materialid = $_GET["id"];
 	}
+	$action = "view";
+	if (isset($_GET["action"])) {
+		$action = $_GET["action"];
+	}
 ?>
 <html lang="en">
     <head>
@@ -45,7 +49,17 @@
 						$page->get_material_types_card($groupid);
 						$page->get_material_list_card($typeid, $groupid);
 					} else {
-						$page->get_material_view_card($materialid);
+						switch ($action) {
+							case "view":
+								$page->get_material_view_card($materialid);
+								break;
+							case "edit":
+								$page->get_material_add_edit_card($materialid);
+								break;
+							default:
+								$page->get_message_card($page->get_message("invalidaction"));
+								break;
+						}
 					}
 				?>
 			</div>

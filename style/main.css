@@ -77,6 +77,12 @@
 #Post-send {
   flex: 2;
 }
+.column-1 {
+  flex: 1 15%;
+}
+.column-2 {
+  flex: 2 100%;
+}
 
 /*** content ***/
 body {
@@ -462,11 +468,15 @@ input[type="button"] {
   text-decoration: none;
   color: var(--button-text-color);
 }
+select,
 textarea,
 input[type="password"],
 input[type="text"] {
   border: 1px solid var(--card-border-color);
   border-radius: 4px;
+  min-height: 30px;
+}
+select option {
   min-height: 30px;
 }
 .button.has-border,
@@ -492,7 +502,7 @@ input[type="button"]:hover:active {
   background-color: var(--button-background-hover-active-color);
 }
 
-textarea {
+textarea:not(.resizable) {
   resize: none;
 }
 

@@ -23,6 +23,22 @@ class Database {
 		}
 		return false;
 	}
+	function user_can_edit($userid) {
+		$this->create_connection();
+				
+		$sql = "SELECT accessLevel FROM profile WHERE userID = '$userid'";
+		$result = $this->conn->query($sql);
+				
+		$this->close_connection();
+		
+		if ($result->num_rows > 0) {
+			$accesslevel = $result->fetch_row()[0];
+			if ($accesslevel >= 1) {
+				return true;
+			}
+			return false;
+		}
+	}
 	
 	// Get
 	function get_userid($email, $password) {
@@ -357,6 +373,26 @@ class Database {
 		if ($result->num_rows > 0) {
 			return $result;
 		}
+	}
+	// title, group, content, file
+	function edit_material($materialid, $title, $groupid, $content, $filename) {
+		$this->create_connection();
+				
+		$sql = "UPDATE materials SET materialDisplayName = '$title', " .
+			   "materialDescription = '$content', " .
+			   "materialGroupID = '$groupid', " .
+			   "fileName = '$filename' " .
+			   "WHERE materialID = $materialid";
+echo $sql;
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
 	}
 }
 
