@@ -30,13 +30,22 @@ var Fortscript = {
     get mainForm() {
         return document.getElementById("main-form");
     },
-    findGetParameter: function (parameterName) {
+    get searchBar() {
+        return document.getElementById("Search");
+    },
+    findGetParameter: function (parameterName, raw = true) {
         var result = null,
             tmp = [];
         var items = location.search.substr(1).split("&");
         for (var index = 0; index < items.length; index++) {
             tmp = items[index].split("=");
-            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            if (tmp[0] === parameterName) {
+                if (raw) {
+                    result = decodeURIComponent(tmp[1]);
+                } else {
+                    result = decodeURIComponent(tmp[1]).replace('+', ' ');
+                }
+            }
         }
         return result;
     },
@@ -69,6 +78,9 @@ var Fortscript = {
         }
         if (Fortscript.mainForm) {
             Fortscript.mainForm.addEventListener("submit", Fortscript.sendMaterial);
+        }
+        if (Fortscript.searchBar) {
+            Fortscript.searchBar.value = Fortscript.findGetParameter("q", false);
         }
         // Close the drop-down menu when something else was clicked
         document.addEventListener("click", function (event) {

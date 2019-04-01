@@ -20,7 +20,9 @@
 			<span class="tooltip">Dictionary</span>
 		</li>
 		<li>
-			<input id="Search" type="search" placeholder="Search posts, groups, users, apps, and more"></input>
+			<form action="search" method="GET">
+				<input name="q" id="Search" type="search" placeholder="Search posts, groups, users, and more"/>
+			</form>
 		</li>
 		<li class="hastooltip">
 			<a class="material-icons" href="messages">mail</a>
