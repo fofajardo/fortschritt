@@ -37,6 +37,23 @@ var Fortscript = {
         }
         return result;
     },
+    removeParameter: function (key, sourceURL) {
+        var rtn = sourceURL.split("?")[0],
+            param,
+            params_arr = [],
+            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
+    },
     postCount: 10,
     init: function () {
         if (Fortscript.sendBtn) {
@@ -209,14 +226,14 @@ var Fortscript = {
         request.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 Fortscript.openModal(this.responseText, function () {
-                    location.reload();
+                    location.assign(Fortscript.removeParameter("action", location.href));
                 });
             }
         };
+        
         let form = document.getElementById("material-form");
         let formData = new FormData(form);;
         request.open("POST", "/common/post.php");
-        //request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send(formData);
     },
     addPosts: function (page) {
