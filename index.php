@@ -7,7 +7,7 @@
 		<title><?php echo SITE_NAME; ?></title>
 		<link href="style/main.css" rel="stylesheet"/>
 		<link href="style/login.css" rel="stylesheet"/>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+		<link href="style/material-icons.css" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet"/> 
 	</head>
 	<body>
