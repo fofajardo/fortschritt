@@ -12,7 +12,7 @@
 			<span class="tooltip">Materials</span>
 		</li>
 		<li class="hastooltip">
-			<a class="material-icons" href="schedule">calendar_today</a>
+			<a class="material-icons" href="schedule">event</a>
 			<span class="tooltip">Schedule</span>
 		</li>
 		<li class="hastooltip">
