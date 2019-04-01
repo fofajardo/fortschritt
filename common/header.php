@@ -21,7 +21,7 @@
 		</li>
 		<li>
 			<form action="search" method="GET">
-				<input name="q" id="Search" type="search" placeholder="Search posts, groups, users, and more"/>
+				<input name="q" id="Search" class="search" type="search" placeholder="Search posts, groups, users, and more"/>
 			</form>
 		</li>
 		<li class="hastooltip">

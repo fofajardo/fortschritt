@@ -16,7 +16,14 @@
 		<?php include "common/modal_template.php" ?>
 		<main class="content story flex-container">
 			<div id="Feed">
-				<?php $page->get_message_card("Component not yet implemented."); ?>
+				<div class="card">
+					<div class="card-content">
+						<form class="flex-container align-center column" action="https://duckduckgo.com/" method="GET">
+							<h1>Search for a word.</h1>
+							<input name="q" class="search" type="search" placeholder="Search for a word"/>
+						</form>
+					</div>
+				</div>
 			</div>
 		</main>
     </body>

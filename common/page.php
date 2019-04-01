@@ -146,7 +146,7 @@ class Page {
 			
 			if ($this->get_user_id() == $row[3]) {
 				printf('<div class="post-header-controls" postid="%s">', $row[0]);
-				echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deletePost(event)">delete_outline</div>';
+				echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deletePost(event)">delete</div>';
 				echo '<div class="button no-padding material-icons md-18 edit-post" onclick="Fortscript.editPost(event)">edit</div>';
 				echo '</div>';
 			}
@@ -223,7 +223,7 @@ class Page {
 						
 						if ($this->get_user_id() == $row[4]) {
 							printf('<div class="post-header-controls" commentid="%s">', $row[0]);
-							echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deleteComment(event)">delete_outline</div>';
+							echo '<div class="button no-padding material-icons md-18 delete-post" onclick="Fortscript.deleteComment(event)">delete</div>';
 							// echo '<div class="button no-padding material-icons md-18 edit-post" onclick="Fortscript.editPost(event)">edit</div>';
 							echo '</div>';
 						}
@@ -468,7 +468,7 @@ class Page {
 				echo '</div></a>';
 				printf('<a href="materials?id=%s&action=delete">', $row[0]);
 				echo '<div class="button has-border">';
-				echo '<span class="material-icons mr">delete_outline</span>';
+				echo '<span class="material-icons mr">delete</span>';
 				echo 'Delete';
 				echo '</div></a>';
 			}
