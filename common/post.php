@@ -123,6 +123,7 @@
 					$content = sanitize($_REQUEST["content"]);
 					$groupid = sanitize($_REQUEST["group"]);
 					$title   = sanitize($_REQUEST["title"]);
+					$typeid = sanitize($_REQUEST["category"]);
 					
 					if (strlen(trim($title)) < 4) {
 						$response = $responses["fieldrequirement"];
@@ -140,7 +141,7 @@
 						// TODO: stubbed function
 						//echo 'Has file!';
 					//}
-					if ($database->edit_material($materialid, $title, $groupid, $content, sanitize($_FILES['file']['name'])) === true) {
+					if ($database->edit_material($materialid, $title, $groupid, $content, $typeid, sanitize($_FILES['file']['name'])) === true) {
 						$response = $responses["materialedited"];
 					}
 				}

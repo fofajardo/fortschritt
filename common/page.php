@@ -289,6 +289,21 @@ class Page {
 			}
 		}
 	}
+	function get_material_types_options($default_index = null) {
+		$database = new Database();
+		$result = $database->get_material_types();
+		// $row[0] = type ID
+		// $row[1] = display name
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_row()) {
+				if (isset($default_index) && $default_index == $row[0]) {
+					printf('<option value="%s" selected>%s</option>', $row[0], $row[1]);
+				} else {
+					printf('<option value="%s">%s</option>', $row[0], $row[1]);
+				}
+			}
+		}
+	}
 	function get_newcomment_card() {
 		echo '<div class="card">';
 		echo '<div class="card-header">';
@@ -503,6 +518,13 @@ class Page {
 			echo '</div>';
 			
 			echo '<div class="flex-container align-center mb">';
+				echo '<span class="column-1 bold">Category:</span>';
+				echo '<select name="category" class="column-2" id="Material-Type">';
+				$this->get_material_types_options($row[1]);
+				echo '</select>';
+			echo '</div>';
+			
+			echo '<div class="flex-container align-center mb">';
 				echo '<span class="column-1 bold">Attachment:</span>';
 				printf('<input name="file" class="column-2" type="file" id="Material-File" value="%s"></input>', $row[3]);
 			echo '</div>';
@@ -514,8 +536,8 @@ class Page {
 				}
 			echo '</div>';
 			
-			echo '<span class="bold">Content/Description:</span>';
-			printf('<textarea name="content" class="resizable" id="Post-area">%s</textarea>', $row[4]);
+			echo '<span class="bold">Content or Description: (uses <a href="https://www.markdowntutorial.com/">Markdown</a> for formatting!)</span>';
+			printf('<textarea name="content" class="resizable">%s</textarea>', $row[4]);
 			
 			echo '<input type="button" value="Submit" onclick="Fortscript.sendMaterial();"/>';
 			echo '</form>';

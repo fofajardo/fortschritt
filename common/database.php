@@ -375,12 +375,13 @@ class Database {
 		}
 	}
 	// title, group, content, file
-	function edit_material($materialid, $title, $groupid, $content, $filename) {
+	function edit_material($materialid, $title, $groupid, $content, $typeid, $filename) {
 		$this->create_connection();
 				
 		$sql = "UPDATE materials SET materialDisplayName = '$title', " .
 			   "materialDescription = '$content', " .
 			   "materialGroupID = '$groupid', " .
+			   "materialTypeID = '$typeid', " .
 			   "fileName = '$filename' " .
 			   "WHERE materialID = $materialid";
 
