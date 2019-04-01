@@ -197,8 +197,9 @@ body {
   padding: 0.5em;
 }
 .card .card {
-  /* XXX: Removes shadow from cards on cards */
+  /* XXX: Removes shadow and margin from cards on cards */
   box-shadow: none;
+  margin: 0;
 }
 .card-header {
   background-color: var(--card-header-background);
