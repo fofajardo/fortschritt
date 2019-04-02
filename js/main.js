@@ -106,7 +106,6 @@ var Fortscript = {
         let b = parseInt(color[3], 16);
         let luminance = (2 * r + 5 * g + b) / 8;
         if (luminance <= 128) {
-            console.log('we are dark');
             document.documentElement.setAttribute('dark', true);
         }
         // Close the drop-down menu when something else was clicked
