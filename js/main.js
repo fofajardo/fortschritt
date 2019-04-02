@@ -291,6 +291,8 @@ var Fortscript = {
                 } else {
                     Fortscript.feedArea.removeChild(Fortscript.morePostsCard);
                 }
+				// FIXME: THIS IS A CRAPPY WORKAROUND!
+                Fortscript.init();
             }
         };
 
