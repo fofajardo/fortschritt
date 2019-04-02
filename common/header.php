@@ -1,3 +1,9 @@
+<!-- START TEMPORARY WORKAROUND -->
+<?php
+	require_once "page.php";
+	$page->get_color_container();
+?>
+<!-- END -->
 <header id="Header" class="flex-container sticky">
 	<ul class="navigation flex-container align-center justify-se">
 		<li>

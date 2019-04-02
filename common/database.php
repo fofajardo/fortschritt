@@ -83,6 +83,32 @@ class Database {
 				// $row[5] = (to be removed) link to cover photo
 				// $row[6] = grade level
 				// $row[7] = access level
+				// $row[8] = page accent color
+				// $row[9] = page background color
+				// $row[10] = header color
+				return $row;
+			}
+		}
+	}
+	function get_user_info($userid) {
+		$this->create_connection();
+		
+		// Needed to show text with accent marks properly
+		$sql = "SET NAMES utf8mb4";
+		$this->conn->query($sql);
+		
+		$sql = "SELECT * FROM user WHERE userID = '$userid'";
+		$result = $this->conn->query($sql);
+				
+		$this->close_connection();
+		
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_row()) {
+				// $row[0] = user ID
+				// $row[1] = user name
+				// $row[2] = user password (hashed)
+				// $row[3] = user email
+				// $row[4] = last login (not updated)
 				return $row;
 			}
 		}
@@ -427,6 +453,78 @@ class Database {
 		$this->close_connection();
 		return $response;
 	}
+
+	function edit_user_info($userid, $username = null, $password = null, $email = null, $logindate = null) {
+		$this->create_connection();
+				
+		$sql = "UPDATE user SET userID = $userid";
+		if ($username) {
+			$sql .= ", userName = '$username'";
+		}
+		if ($password) {
+			$sql .= ", userPassword = '$password'";
+		}
+		if ($email) {
+			$sql .= ", userEmail = '$email'";
+		}
+		if ($logindate) {
+			$sql .= ", lastLogin = '$logindate'";
+		}
+		
+		$sql .= " WHERE userID = $userid";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	}
+	function edit_profile_info($userid, $fullname = null, $sectionid = null,
+			 $joined_groups = null, $gradelevel = null, $accesslevel = null,
+			 $pagecolor = null, $accentcolor = null, $headercolor = null) {
+		// STUB
+		$this->create_connection();
+				
+		$sql = "UPDATE profile SET userID = $userid";
+		if ($fullname) {
+			$sql .= ", fullName = '$fullname'";
+		}
+		if ($sectionid) {
+			$sql .= ", sectionID = '$sectionid'";
+		}
+		if ($joined_groups) {
+			$sql .= ", joinedGroups = '$joined_groups'";
+		}
+		if ($gradelevel) {
+			$sql .= ", gradeLevel = '$gradelevel'";
+		}
+		if ($accesslevel) {
+			$sql .= ", accessLevel = '$accesslevel'";
+		}
+		if ($pagecolor) {
+			$sql .= ", pageColor = '$pagecolor'";
+		}
+		if ($accentcolor) {
+			$sql .= ", accentColor = '$accentcolor'";
+		}
+		if ($headercolor) {
+			$sql .= ", headerColor = '$headercolor'";
+		}
+		
+		$sql .= " WHERE userID = $userid";
+		$response = false;
+		if ($this->conn->query($sql) === TRUE) {
+			$response = true;
+		} else {
+			echo "Error: " . $sql . "<br>" . $this->conn->error;
+		}
+
+		$this->close_connection();
+		return $response;
+	 }
 }
 
 ?>

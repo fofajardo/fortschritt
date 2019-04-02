@@ -12,6 +12,7 @@
 	
 	$responses = array(
 		"noaction" => "Invalid request: You did not provide an action.",
+		"settingsaved" => "Your settings were saved.",
 		"fieldrequirement" => "Your note contains too few characters.",
 		"postcreated" => "Your note was posted.",
 		"postdeleted" => "Your note was deleted.",
@@ -198,6 +199,25 @@
 						$response = $responses["materialdeleted"];
 					}
 				}
+				break;
+			case "save_settings":
+				$database = new Database();
+				$storage = new Storage();
+				
+				/* profile (file)
+					cover (file)
+					page_color
+					accent_color
+					header_color */
+				$page_color = sanitize($_REQUEST["page_color"]);
+				$accent_color = sanitize($_REQUEST["accent_color"]);
+				$header_color = sanitize($_REQUEST["header_color"]);
+				
+				$storage->manage_file($_FILES["profile"], 'profiles', $page->get_user_id() . '.jpg');
+				$storage->manage_file($_FILES["cover"], 'profiles', $page->get_user_id() . '_cover.jpg');
+				$database->edit_profile_info($page->get_user_id(), null, null, null, null, null, $page_color, $accent_color, $header_color);
+				
+				header('Location: /');
 				break;
 			case "get_posts":
 				$groupid = empty($_REQUEST['group']) ? null : $_REQUEST['group'];

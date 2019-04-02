@@ -3,7 +3,7 @@
 require_once "config.php";
 
 class Storage {
-	function manage_file($file, $location) {
+	function manage_file($file, $location, $newname = null) {
 		try {
 			// Undefined | Multiple Files | $_FILES Corruption Attack
 			// If this request falls under any of them, treat it invalid.
@@ -52,11 +52,20 @@ class Storage {
 			}
 
 			// Obtain safe unique name from its binary data.
-			if (!move_uploaded_file(
-				$file['tmp_name'],
-				sprintf('%s/%s/%s', $_SERVER['DOCUMENT_ROOT'], $location, $file['name'])
-			)) {
-				throw new RuntimeException('Failed to move uploaded file.');
+			if (isset($newname)) {
+				if (!move_uploaded_file(
+					$file['tmp_name'],
+					sprintf('%s/%s/%s', $_SERVER['DOCUMENT_ROOT'], $location, $newname)
+				)) {
+					throw new RuntimeException('Failed to move uploaded file.');
+				}
+			} else {
+				if (!move_uploaded_file(
+					$file['tmp_name'],
+					sprintf('%s/%s/%s', $_SERVER['DOCUMENT_ROOT'], $location, $file['name'])
+				)) {
+					throw new RuntimeException('Failed to move uploaded file.');
+				}
 			}
 
 			//echo 'File is uploaded successfully.';

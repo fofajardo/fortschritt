@@ -9,6 +9,8 @@
 		<link href="style/main.css" rel="stylesheet"/>
 		<link href="style/material-icons.css" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet"/>
+		<link href="components/color-picker/color-picker.css" rel="stylesheet">
+		<script src="components/color-picker/color-picker.js"></script>
 		<script src="js/main.js" type="application/javascript"></script>
     </head>
     <body>
@@ -16,8 +18,9 @@
 		<?php include "common/modal_template.php" ?>
 		<main class="content story flex-container">
 			<div id="Feed">
-				<?php $page->get_message_card("Component not yet implemented."); ?>
+				<?php $page->get_settings_card($page->get_user_id()); ?>
 			</div>
 		</main>
+		<script src="js/settings.js"></script>
     </body>
 </html>

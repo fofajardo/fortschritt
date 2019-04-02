@@ -659,6 +659,78 @@ class Page {
 		echo '</div>';
 	}
 	// TODO: Add considerations for grade level.
+
+	function get_settings_card($userid) {
+		$database = new Database();
+		$profile_info = $database->get_profile_info($userid);
+		
+		// $row[0] = user ID
+		// $row[1] = full name
+		// $row[2] = section ID
+		// $row[3] = joined groups
+		// $row[6] = grade level
+		// $row[7] = access level
+
+		echo '<div class="card">';
+			echo '<div class="card-header">';
+			echo 'Settings';
+			echo '</div>';
+			echo '<div><form action="/common/post" method="POST" enctype="multipart/form-data" class="card-content flex-container column">';
+			
+				echo '<input type="hidden" name="action" value="save_settings" />';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Name:</span>';
+					echo $profile_info[1];
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Section:</span>';
+					echo $database->get_section_displayname($profile_info[2]);
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Grade Level:</span>';
+					echo $profile_info[6];
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Access Level:</span>';
+					echo $this->get_access_level($profile_info[7]);
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Email:</span>';
+					echo '<input type="button" value="Change Email"/>';
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Password:</span>';
+					echo '<input type="button" value="Change Password"/>';
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Profile Picture:</span>';
+					echo '<input name="profile" type="file"/>';
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Cover Photo:</span>';
+					echo '<input name="cover" type="file"/>';
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Page Accent Color:</span>';
+					printf('<input id="Picker-Accent-Color" name="accent_color" type="colorpicker" value="%s"/>', $profile_info[8]);
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Page Background Color:</span>';
+					printf('<input id="Picker-Background-Color" name="page_color" type="colorpicker" value="%s"/>', $profile_info[9]);
+				echo '</div>';
+				echo '<div class="flex-container align-center mb">';
+					echo '<span class="column-1 bold">Header Background Color:</span>';
+					printf('<input id="Picker-Header-Color" name="header_color" type="colorpicker" value="%s"/>', $profile_info[10]);
+				echo '</div>';
+				echo '<button type="submit" class="button">Submit</button>';
+			echo '</form></div>';
+		echo '</div>';
+	}
+	function get_color_container() {
+		$database = new Database();
+		$result = $database->get_profile_info($this->get_user_id());
+		printf('<div id="ColorContainer" accent="%s" page="%s" header="%s"></div>', $result[8], $result[9], $result[10]);
+	}
 }
 
 ?>

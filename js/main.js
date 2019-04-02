@@ -33,6 +33,9 @@ var Fortscript = {
     get searchBar() {
         return document.getElementById("Search");
     },
+    get colorContainer() {
+        return document.getElementById("ColorContainer");
+    },
     findGetParameter: function (parameterName, raw = true) {
         var result = null,
             tmp = [];
@@ -82,6 +85,9 @@ var Fortscript = {
         if (Fortscript.searchBar) {
             Fortscript.searchBar.value = Fortscript.findGetParameter("q", false);
         }
+        document.documentElement.style.setProperty("--page-background-color", Fortscript.colorContainer.getAttribute("page"));
+        document.documentElement.style.setProperty("--header-text-color", Fortscript.colorContainer.getAttribute("accent"));
+        document.documentElement.style.setProperty("--header-background-color", Fortscript.colorContainer.getAttribute("header"));
         // Close the drop-down menu when something else was clicked
         document.addEventListener("click", function (event) {
             if (!event.target.matches('.dropdown-button')) {
