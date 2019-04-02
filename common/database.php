@@ -61,32 +61,42 @@ class Database {
 		}
 		return null;
 	}
-	function get_profile_info($userid) {
+	function get_profile_info($userid = null, $all_results = false, $query = null) {
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
 		$sql = "SET NAMES utf8mb4";
 		$this->conn->query($sql);
 		
-		$sql = "SELECT * FROM profile WHERE userID = '$userid'";
+		$sql = "SELECT * FROM profile";
+		if ($userid) {
+			$sql .= " WHERE userID = '$userid'";
+		}
+		if ($query) {
+			$sql .= " WHERE fullName LIKE '%$query%'";
+		}
 		$result = $this->conn->query($sql);
 				
 		$this->close_connection();
 		
 		if ($result->num_rows > 0) {
-			while ($row = $result->fetch_row()) {
-				// $row[0] = user ID
-				// $row[1] = full name
-				// $row[2] = section ID
-				// $row[3] = joined groups
-				// $row[4] = (to be removed) link to profile picture
-				// $row[5] = (to be removed) link to cover photo
-				// $row[6] = grade level
-				// $row[7] = access level
-				// $row[8] = page accent color
-				// $row[9] = page background color
-				// $row[10] = header color
-				return $row;
+			if ($all_results) {
+				return $result;
+			} else {
+				while ($row = $result->fetch_row()) {
+					// $row[0] = user ID
+					// $row[1] = full name
+					// $row[2] = section ID
+					// $row[3] = joined groups
+					// $row[4] = (to be removed) link to profile picture
+					// $row[5] = (to be removed) link to cover photo
+					// $row[6] = grade level
+					// $row[7] = access level
+					// $row[8] = page accent color
+					// $row[9] = page background color
+					// $row[10] = header color
+					return $row;
+				}
 			}
 		}
 	}
@@ -179,7 +189,7 @@ class Database {
 	}
 	function get_posts($groupid = null, $sectionid = null, $postid = null,
 					   $userid = null, $sort_bydate = true, $limit = 10,
-					   $offset = 0) {
+					   $offset = 0, $search_query = null) {
 		$this->create_connection();
 		
 		// Needed to show text with accent marks properly
@@ -205,6 +215,9 @@ class Database {
 		}
 		if ($userid) {
 			$sql .= " AND userID = '$userid'";
+		}
+		if ($search_query) {
+			$sql .= " AND postContent LIKE '%$search_query%'";
 		}
 		if ($sort_bydate) {
 			$sql .= " ORDER BY postDate DESC, postID DESC";

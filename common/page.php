@@ -7,10 +7,18 @@ $page = new Page();
 
 class Page {
 	private $messages = null;
+	private function sanitize($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data, ENT_QUOTES | ENT_HTML5);
+		return $data;
+	}
 	
 	function __construct() {
 		$this->messages = array(
 			"invalidaction" => "Invalid action.",
+			"noquery" => "Search for something to continue.",
+			"nousers" => "No users found.",
 			"notfound" => "No more notes.",
 			"nocomments" => "No comments.",
 			"nomaterials" => "No materials available.",
@@ -48,14 +56,18 @@ class Page {
 		
 		// Profile picture
 		echo '<div class="mr">';
+		printf('<a href="profile?id=%s">', $userid);
 		$this->get_user_profile_picture($row[1], $row[0]);
+		echo '</a>';
 		echo '</div>';
 		
 		// User information
 		echo '<div class="profile-information flex-container column">';
 		// Full Name
 		echo '<span class="profile-username">';
+		printf('<a href="profile?id=%s">', $userid);
 		echo $row[1];
+		echo '</a>';
 		echo '</span>';
 		// Grade and Section
 		echo '<span class="subtitle">';
@@ -63,6 +75,21 @@ class Page {
 		$this->get_access_level($row[7]);
 		echo '</span>';
 		echo '</div>';
+	}
+	function get_users($query) {
+		$database = new Database();
+		$result = $database->get_profile_info(null, true, $query);
+		if (!isset($result)) {
+			$this->get_message_card($this->messages["nousers"]);
+			return;
+		}
+		while ($row = $result->fetch_row()) {
+			echo '<div class="card">';
+			echo '<div class="flex-container align-center">';
+			$this->get_user_card($row[0]);
+			echo '</div>';
+			echo '</div>';
+		}
 	}
 	function get_access_level($accessid) {
 		echo '<div class="flex-container align-center subtitle bold">';
@@ -104,10 +131,10 @@ class Page {
 	}
 	function get_user_posts($groupid = null, $has_card = true, $postid = null,
 							$show_category = true, $userid = null,
-							$is_story = false, $sort_bydate = true, $limit = 10, $offset = 0) {
+							$is_story = false, $sort_bydate = true, $limit = 10, $offset = 0, $search_query = null) {
 		$database = new Database();
 		$sectionid = $database->get_profile_info($this->get_user_id())[2];
-		$result = $database->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset);
+		$result = $database->get_posts($groupid, $sectionid, $postid, $userid, $sort_bydate, $limit, $offset, $search_query);
 
 		if (!isset($result) || (isset($postid) && $postid == 0)) {
 			$this->get_message_card($this->messages["notfound"]);
@@ -726,6 +753,27 @@ class Page {
 			echo '</form></div>';
 		echo '</div>';
 	}
+	
+	function get_search_results($userid, $query) {
+		if (strlen($this->sanitize($query)) > 0) {
+			echo '<div class="card">';
+			echo '<div class="card-header">';
+			echo 'Posts';
+			echo '</div>';
+			$this->get_user_posts(null, true, null, true, null, false, true, 9999999, 0, $query);
+			echo '</div>';
+			
+			echo '<div class="card">';
+			echo '<div class="card-header">';
+			echo 'Users';
+			echo '</div>';
+			$this->get_users($query);
+			echo '</div>';
+		} else {
+			$this->get_message_card($this->messages["noquery"]);
+		}
+	}
+	
 	function get_color_container() {
 		$database = new Database();
 		$result = $database->get_profile_info($this->get_user_id());

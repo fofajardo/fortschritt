@@ -220,6 +220,9 @@ body {
   box-shadow: none;
   margin: 0;
 }
+.card .card:hover {
+  background-color: var(--button-background-hover-color);
+}
 .card-header {
   background-color: var(--card-header-background);
   font-weight: bold;
