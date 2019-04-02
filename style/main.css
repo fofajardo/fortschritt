@@ -21,6 +21,11 @@
   --card-header-background: rgba(0, 0, 0, 0.05);
   --card-footer-background: rgba(0, 0, 0, 0.02);
   --card-border-color: rgba(0, 0, 0, 0.2);
+  
+  --modal-background: var(--card-background);
+  --modal-border-color: var(--card-border-color);
+  --modal-shadow: var(--card-shadow);
+  --modal-text-color: var(--page-text-color);
 }
 :root[dark="true"] {
   --card-background: rgba(255, 255, 255, 0.15);
@@ -30,6 +35,7 @@
   --button-background-hover-active-color: rgba(255, 255, 255, 0.2);
   --tooltip-background-color: rgba(255, 255, 255, 0.3);
   --header-link-hover-color: var(--button-background-hover-color);
+  --modal-background: rgba(0, 0, 0, 0.9);
   --button-text-color: #fff;
 }
 
@@ -386,10 +392,11 @@ body {
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: var(--card-background);
-  border: 1px solid var(--card-border-color);
+  background-color: var(--modal-background);
+  border: 1px solid var(--modal-border-color);
+  color: var(--modal-text-color);
   border-radius: 10px;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--modal-shadow);
   margin: 15% auto;
   padding: 10px 20px;
   width: 50%;
