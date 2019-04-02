@@ -1,9 +1,11 @@
 :root {
   --card-radius: 5px;
+  --card-background: rgba(255, 255, 255, 0.8);
 }
 .content {
   padding: 0;
   height: 100vh;
+  animation: FadeIn 1s ease;
 }
 .card-login {
   width: 450px;
@@ -30,4 +32,31 @@
 }
 #LoginForm form > * {
   margin: 1em 0;
+}
+
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.body-gradient-effect {
+  background: linear-gradient(296deg, #c9e1db, #c9d4e1, #d4c9e1, #dbdbdb, #e3d8c7, #e1e3c7);
+  background-size: 200% 200%;
+  animation: HueRotate 24s ease infinite;
+}
+
+@keyframes HueRotate {
+  0% {
+    background-position: 13% 0%
+  }
+  50% {
+    background-position: 88% 100%
+  }
+  100% {
+    background-position: 13% 0%
+  }
 }

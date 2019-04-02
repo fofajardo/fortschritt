@@ -10,7 +10,7 @@
 		<link href="style/material-icons.css" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet"/> 
 	</head>
-	<body>
+	<body class="body-gradient-effect">
 		<main class="content flex-container align-center justify-center">
 			<div class="card card-login flex-container column">
 				<div class="card-header flex-container column align-center">
