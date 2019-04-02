@@ -8,6 +8,7 @@
 		<link href="style/main.css" rel="stylesheet"/>
 		<link href="style/material-icons.css" rel="stylesheet"/>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet"/>
+		<script src="js/main.js" type="application/javascript"></script>
     </head>
     <body>
 		<?php include "common/header.php" ?>

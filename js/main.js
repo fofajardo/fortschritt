@@ -88,6 +88,27 @@ var Fortscript = {
         document.documentElement.style.setProperty("--page-background-color", Fortscript.colorContainer.getAttribute("page"));
         document.documentElement.style.setProperty("--header-text-color", Fortscript.colorContainer.getAttribute("accent"));
         document.documentElement.style.setProperty("--header-background-color", Fortscript.colorContainer.getAttribute("header"));
+        
+        function hexToRgb(hex) {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
+
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result;
+        }
+        
+        let color = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--page-background-color'));
+        let r = parseInt(color[1], 16);
+        let g = parseInt(color[2], 16);
+        let b = parseInt(color[3], 16);
+        let luminance = (2 * r + 5 * g + b) / 8;
+        if (luminance <= 128) {
+            console.log('we are dark');
+            document.documentElement.setAttribute('dark', true);
+        }
         // Close the drop-down menu when something else was clicked
         document.addEventListener("click", function (event) {
             if (!event.target.matches('.dropdown-button')) {

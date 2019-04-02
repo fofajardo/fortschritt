@@ -22,6 +22,16 @@
   --card-footer-background: rgba(0, 0, 0, 0.02);
   --card-border-color: rgba(0, 0, 0, 0.2);
 }
+:root[dark="true"] {
+  --card-background: rgba(255, 255, 255, 0.15);
+  --card-shadow: 0 0px 3px 0 rgba(255, 255, 255, 0.15);
+  --page-text-color: #fff;
+  --button-background-hover-color: rgba(255, 255, 255, 0.1);
+  --button-background-hover-active-color: rgba(255, 255, 255, 0.2);
+  --tooltip-background-color: rgba(255, 255, 255, 0.3);
+  --header-link-hover-color: var(--button-background-hover-color);
+  --button-text-color: #fff;
+}
 
 /*** site header ***/
 #Header {
@@ -67,6 +77,7 @@
   border: none;
   border-radius: 4px;
   background-color: var(--header-link-hover-color);
+  color: var(--header-text-color);
   margin: 0 10px;
   padding: 0 10px;
   min-width: 500px;
@@ -475,6 +486,8 @@ select,
 textarea,
 input[type="password"],
 input[type="text"] {
+  background-color: var(--card-background);
+  color: var(--page-color);
   border: 1px solid var(--card-border-color);
   border-radius: 4px;
   min-height: 30px;
