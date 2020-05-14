@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php require "common/config.php"; 
 	  require "common/session.php";
-	  require "common/page.php"; ?>
+	  include "common/page.php"; ?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>

@@ -60,3 +60,12 @@
     background-position: 13% 0%
   }
 }
+
+@media all and (max-width: 1000px) {
+  .content {
+    height: auto;
+  }
+  .card-login {
+    width: auto;
+  }
+}

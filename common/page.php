@@ -1,7 +1,7 @@
 <?php
 
-require_once "database.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/components/parsedown/parsedown.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/common/database.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/components/parsedown/Parsedown.php";
 
 $page = new Page();
 
@@ -190,10 +190,12 @@ class Page {
 			
 			if (!$is_story) {
 				echo '<div class="post-controls">';
+				printf('<a href="story.php?id=%s">', $row[0]);
 				echo '<div class="button flex-container align-center">';
 				echo '<span class="material-icons md-18 mr">comment</span>';
-				printf('<a href="story.php?id=%s">Comments</a>', $row[0]);
+				echo '<span>Comments</span>';
 				echo '</div>';
+				echo '</a>';
 				echo '</div>';
 			}
 			
@@ -768,6 +770,13 @@ class Page {
 			echo 'Users';
 			echo '</div>';
 			$this->get_users($query);
+			echo '</div>';
+			
+			echo '<div class="card">';
+			echo '<div class="card-header">';
+			echo 'Materials';
+			echo '</div>';
+			$this->get_message_card("Component unavailable.");
 			echo '</div>';
 		} else {
 			$this->get_message_card($this->messages["noquery"]);

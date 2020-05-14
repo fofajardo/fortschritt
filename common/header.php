@@ -1,6 +1,6 @@
 <!-- START TEMPORARY WORKAROUND -->
 <?php
-	require_once "page.php";
+	include_once $_SERVER['DOCUMENT_ROOT'] . "/common/page.php";
 	$page->get_color_container();
 ?>
 <!-- END -->
@@ -10,8 +10,8 @@
 			<a href="dashboard"><b><?php echo SITE_NAME; ?></b></a>
 		</li>
 		<li class="hastooltip">
-			<a class="material-icons" href="dashboard">dashboard</a>
-			<span class="tooltip">Dashboard</span>
+			<a class="material-icons" href="dashboard">home</a>
+			<span class="tooltip">Home</span>
 		</li>
 		<li class="hastooltip">
 			<a class="material-icons" href="materials">local_library</a>
@@ -30,10 +30,10 @@
 				<input name="q" id="Search" class="search" type="search" placeholder="Search posts, groups, users, and more"/>
 			</form>
 		</li>
-		<li class="hastooltip">
+		<!--li class="hastooltip">
 			<a class="material-icons" href="messages">mail</a>
 			<span class="tooltip">Messages</span>
-		</li>
+		</li-->
 		<li class="flex-container">
 			<div class="hastooltip">
 				<a class="material-icons" href="profile">account_circle</a>

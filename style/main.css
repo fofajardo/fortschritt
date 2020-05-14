@@ -26,6 +26,14 @@
   --modal-border-color: var(--card-border-color);
   --modal-shadow: var(--card-shadow);
   --modal-text-color: var(--page-text-color);
+  
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 :root[dark="true"] {
   --card-background: rgba(255, 255, 255, 0.15);
@@ -558,10 +566,25 @@ textarea:not(.resizable) {
   .content {
     padding: 0;
   }
+  .content {
+    display: block;
+  }
+  .navigation {
+    flex-direction: column;
+  }
   .navigation .material-icons {
-    font-size: 16px;
+    font-size: 24px;
   }
   .navigation a {
     padding: 2px;
+  }
+  .sticky {
+    position: static;
+  }
+  .navigation .tooltip {
+    display: none;
+  }
+  .search {
+    min-width: 100px;
   }
 }

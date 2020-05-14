@@ -18,6 +18,7 @@ var Fortsettings = {
             picker.on("change", function (color) {
                 Fortsettings.background_picker.value = '#' + color;
                 document.documentElement.style.setProperty("--page-background-color", Fortsettings.background_picker.value);
+                Fortscript.determineUILuminosity();
             });
         }
         if (Fortsettings.accent_picker) {
